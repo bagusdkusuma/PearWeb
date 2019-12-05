@@ -1,0 +1,49 @@
+﻿@model DSLNG.PEAR.Services.Responses.Wave.GetWaveResponse
+<table class="table borderless tide-wave">
+    <tbody>
+        <tr rowspan="2">
+            <td>
+                <label>Sea Condition and Jetty Status :</label>
+            </td>
+            <td>
+                <img style="vertical-align: middle;margin-top: -2px;height: 10px;" src="@Url.Content("~/Content/images/water.png")" />
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.Tide)
+            </td>
+        </tr>
+        <tr style="height: 45px;">
+            <td>
+                <label>Wind Direction & Speed :</label>
+            </td>
+            <td>
+                <img style="vertical-align: middle;margin-top: -8px;height: 19px;" src="@Url.Content("~/Content/images/arah-angin.png")" />
+            </td>
+            <td>
+                @Html.DisplayDerValue(Model.Text,"") @Html.DisplayDerValue(Model.Speed,"N/A",true,0) Km/hr
+            </td>
+        </tr>
+    </tbody>
+</table>
+@*@if (Model.ValueId > 0)
+{
+    <table class="der-table der-qhsse-row-1">
+        <tr>
+            <td>Tide/Wave at Jetty:</td>
+            <td style="text-align: center">[image]</td>
+            <td colspan="2" style="text-align: center">@Model.Tide</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td rowspan="2" style="text-align: center">[image]</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Wind Direction&Speed:</td>
+            <td style="text-align: right"><img height="60" width="60" src="@Url.Content("/content/img/select/" + Model.Value)" /></td>
+            <td style="text-align: center">@Model.Speed</td>
+        </tr>
+    </table>
+}*@
+

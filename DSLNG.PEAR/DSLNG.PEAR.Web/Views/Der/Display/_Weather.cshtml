@@ -1,0 +1,12 @@
+﻿@model DSLNG.PEAR.Services.Responses.Weather.GetWeatherResponse
+    <tr rowspan="2">
+        <td colspan="2">
+            <label>Weather:</label>
+        </td>
+        <td>
+            @Model.Text
+        </td>
+        <td class="text-center">
+            <img height="45"  src="@Url.Content("/content/img/select/" + Model.Value)">
+        </td>
+    </tr>

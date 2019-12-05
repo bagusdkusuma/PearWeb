@@ -1,0 +1,624 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
+
+@{
+    ViewBag.Title = "Display";
+}
+
+<style type="text/css"></style>
+<h2>Display</h2>
+<a href="@Url.Action("OriginalData", new { id = Model.Id, currentDate = "02/18/2016" })">Original Data</a>
+<div class="row der-display">
+    <div class="col-sm-12">
+        <form class="form-inline">
+            <div class="form-group form-list">
+                <label for="StartInDisplay">Start</label>
+                <input id="currentDate" class="form-control datepicker" type="text" value="@Model.Today">
+                <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row der-row">
+        <div class="col-md-6 no-padding">
+            @{
+                var row0Col0 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 0);
+                if (row0Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col0.Id })" class="layout-item"></div>
+                }
+                <!--table class="text-center table table-bordered">
+                  <tr>
+                    <td colspan="5">Avg YTD-Key Statistics (compare to prior day)</td>
+                  </tr>
+                  <tr>
+                    <td>Feed Gas</td>
+                    <td>MCHE Rundown</td>
+                    <td>LNG Prod</td>
+                    <td>CDS Prod</td>
+                    <td>Fuel Gas</td>
+                  </tr>
+                  <tr>
+                    <td>324.1 mmscfd</td>
+                    <td>6,616.4 ton/d</td>
+                    <td>6,616.4 ton/d</td>
+                    <td>6,616.4 bpcd</td>
+                    <td>6,616.4 ton/d</td>
+                  </tr>
+                  <tr>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                    <td><span class="fa fa-arrow-up fa-lg"></span></td>
+                  </tr>
+                </!--table -->
+            }
+        </div>
+        <div class="col-md-6 no-padding daily-highlight">
+            @{
+                var row0Col1 = Model.Items.FirstOrDefault(x => x.Row == 0 && x.Column == 1);
+                if (row0Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row0Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+    </div>
+    <div class="row der-row">
+        <div class="col-md-3">
+            @{
+                var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
+                if (row1Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
+                if (row1Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
+                if (row1Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3">
+            @{
+                var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
+                if (row1Col3 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row1Col3.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+    </div>
+    <div class="row der-row">
+        <p class="der-table-title">QHSSE & PROCESS SAFETY MANAGEMENT</p>
+        <div class="col-md-5 no-padding">
+            @{
+                var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
+                if (row2Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3 no-padding">
+            @{
+                var row2Col1 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 1);
+                if (row2Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-4 no-padding">
+            @{
+                var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
+                if (row2Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row2Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+    </div>
+    <div class="row der-row">
+        <div class="col-md-5 no-padding">
+            @{
+                var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
+                if (row3Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3 no-padding">
+            @{
+                var row3Col1 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 1);
+                if (row3Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col1.Id })" class="layout-item"></div>
+                }
+            }
+
+            @{
+                var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
+                if (row3Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col2.Id })" class="layout-item"></div>
+                }
+            }
+
+        </div>
+        <div class="col-md-4 no-padding">
+            <p class="der-bg-blue-1" style="border: 1px solid black; text-align: center; margin: 0 0 1px">PROCESS UPSET / ANOMALY  / CONDITION</p>
+            <div class="row der-row" style="margin-left: 0">
+                <div class="col-md-6 no-padding">
+                    @{
+                        var row3Col3 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 3);
+                        if (row3Col3 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col3.Id })" class="layout-item"></div>
+                        }
+                    }
+
+                </div>
+                <div class="col-md-6 no-padding">
+                    @{
+                        var row3Col4 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 4);
+                        if (row3Col4 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row3Col4.Id })" class="layout-item"></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row der-row">
+        <div class="col-md-6 no-padding security-remark">
+            @{
+                var row4Col0 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 0);
+                if (row4Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-4 no-padding">
+            @{
+                var row4Col1 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 1);
+                if (row4Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-2 no-padding">
+            @{
+                var row4Col2 = Model.Items.FirstOrDefault(x => x.Row == 4 && x.Column == 2);
+                if (row4Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row4Col2.Id })" class="layout-item"></div>
+                }
+            }
+
+        </div>
+    </div>
+    <div class="row" style="font-size: 11px">
+        <p class="der-table-title" style="margin-bottom: 5px">COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</p>
+        <p class="der-table-subtitle1" style="margin: 0 0 1px;">FEED GAS TO PLANT</p>
+        <div class="col-md-6" style="padding: 0px 0px">
+            @{
+                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                if (row5Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-4" style="padding: 0px 0px">
+            @{
+                var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                if (row5Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-2" style="padding: 0px 0px">
+            @{
+                var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                if (row5Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+
+        <div class="col-md-4 no-padding">
+            @{
+                var row6Col0 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 0);
+                if (row6Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-2 no-padding"></div>
+        <div class="col-md-6 no-padding">
+
+            @{
+                var row6Col2 = Model.Items.FirstOrDefault(x => x.Row == 6 && x.Column == 2);
+                if (row6Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row6Col2.Id })" class="layout-item"></div>
+                }
+            }
+
+        </div>
+        <div class="col-md-6" style="padding: 0px 0px">
+            @{
+                var row7Col0 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 0);
+                if (row7Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col0.Id })" class="layout-item"></div>
+                }
+            }
+            <table class="der-table all-border">
+                <tr>
+                    <td>
+                    @{
+                        var row8Col0 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 0);
+                        if (row8Col0 != null)
+                        {
+                            <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col0.Id })" class="layout-item" style="height:250px;width:200px;"></div>
+                        }
+                        }
+                    </td>
+                    <td colspan="2" class="der-bg-blue-7">@{
+                        var row8Col1 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 1);
+                        if (row8Col1 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col1.Id })" class="layout-item"></div>
+                        }
+                    }</td>
+                    <td colspan="2" class="der-bg-blue-7">@{
+                        var row8Col2 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 2);
+                        if (row8Col2 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col2.Id })" class="layout-item"></div>
+                        }
+                    }</td>
+                    <<td class="der-bg-blue-7">@{
+                        var row8Col3 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 3);
+                        if (row8Col3 != null)
+                        {
+                        <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col3.Id })" class="layout-item"></div>
+                        }
+                    }</td>
+
+                </tr>
+            </table>
+            @*@{
+                var row9Col0 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 0);
+                if (row9Col0 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col0.Id })" class="layout-item"></div>
+                }
+            }*@
+        </div>
+        <div class="col-md-6" style="padding: 0px 0px">
+            @{
+                var row7Col1 = Model.Items.FirstOrDefault(x => x.Row == 7 && x.Column == 1);
+                if (row7Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row7Col1.Id })" class="layout-item"></div>
+                }
+            }
+            @{
+                var row8Col4 = Model.Items.FirstOrDefault(x => x.Row == 8 && x.Column == 4);
+                if (row8Col4 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row8Col4.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+
+    </div>
+    <div class="row" style="font-size: 11px">
+        <div class="col-md-6 no-padding">
+            @*@{
+                var row9Col1 = Model.Items.FirstOrDefault(x => x.Row == 9 && x.Column == 1);
+                if (row9Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row9Col1.Id })" class="layout-item"></div>
+                }
+            }*@
+            @{
+                var row11Col0 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 0);
+                if (row11Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row11Col0.Id })" class="layout-item"></div>
+                }
+            }
+            @{
+                var row12Col0 = Model.Items.FirstOrDefault(x => x.Row == 12 && x.Column == 0);
+                if (row12Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row12Col0.Id })" class="layout-item"></div>
+                }
+            }
+            @{
+                var row13Col0 = Model.Items.FirstOrDefault(x => x.Row == 13 && x.Column == 0);
+                if (row13Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row13Col0.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-6 no-padding">
+            @*<table class="der-table der-dummy all-border">
+                <thead>
+                    <tr>
+                        <th colspan="8">KEY EQUIPMENT STATUS
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Power
+                        </th>
+                        <th colspan="2">Process Train
+                        </th>
+                        <th colspan="2">Utilities
+                        </th>
+                        <th colspan="2">Support
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GTG-A
+                        </td>
+                        <td>Not Available
+                        </td>
+                        <td>C3 Compr
+                        </td>
+                        <td>Running
+                        </td>
+                        <td>Air Compr-A
+                        </td>
+                        <td>Standby
+                        </td>
+                        <td>Feed Inlet System
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>GTG-B
+                        </td>
+                        <td>Running
+                        </td>
+                        <td>LP-MR Compr
+                        </td>
+                        <td>Running
+                        </td>
+                        <td>Air Compr-B
+                        </td>
+                        <td>Running
+                        </td>
+                        <td>Potable Water Syst
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>GTG-C
+                        </td>
+                        <td>Running
+                        </td>
+                        <td>HP-MR Compr
+                        </td>
+                        <td>Running
+                        </td>
+                        <td>Air Compr-C
+                        </td>
+                        <td>Standby
+                        </td>
+                        <td>Fire-Protect Syst
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>EDG-A
+                        </td>
+                        <td>Standby
+                        </td>
+                        <td>Hot Oil System
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                        <td>N2 System
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                        <td>C2&C3 Storage Tank
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>EDG-B
+                        </td>
+                        <td>Standby
+                        </td>
+                        <td>Fuel Gas System
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                        <td>BOG Compr
+                        </td>
+                        <td>Tripped
+                        </td>
+                        <td>Flare System
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>EDG-C
+                        </td>
+                        <td>Standby
+                        </td>
+                        <td>MCHE
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                        <td>LNG Jetty
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                        <td>Waste System
+                        </td>
+                        <td>Normal Ops
+                        </td>
+                    </tr>
+                </tbody>
+            </table>*@
+            @{
+                var row10Col1 = Model.Items.FirstOrDefault(x => x.Row == 10 && x.Column == 1);
+                if (row10Col1 != null)
+                {
+                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row10Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+    </div>
+    <div class="row der-row">
+        <p class="der-table-title" style="margin: 0 0 1px">SUPPORT & ENABLER PERFORMANCE</p>
+        <div class="col-md-3 no-padding">
+            @{
+                var row14Col0 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 0);
+                if (row14Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col0.Id })" class="layout-item"></div>
+                }
+            }
+            @{
+                var row15Col0 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 0);
+                if (row15Col0 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col0.Id })" class="layout-item"></div>
+                }
+            }
+
+        </div>
+        <div class="col-md-3 no-padding">
+            @{
+                var row14Col1 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 1);
+                if (row14Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-6 no-padding">
+            @{
+                var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
+                if (row14Col2 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row14Col2.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3 no-padding">
+            @{
+                var row15Col1 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 1);
+                if (row15Col1 != null)
+                {
+                <div data-url="@Url.Action("LayoutItem", "Der", new { id = row15Col1.Id })" class="layout-item"></div>
+                }
+            }
+        </div>
+        <div class="col-md-3 no-padding">
+            <table class="der-table der-dummy">
+                <tr>
+                    <td class="der-title-underline">Market Tone:</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+@Html.Partial("_Modal")
+
+
+<script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function reloadView() {
+            var currentDate = $('#currentDate').val();
+            $('.layout-item').each(function () {
+                var that = $(this);
+                $.ajax({
+                    url: that.attr('data-url'),
+                    data: { currentDate: currentDate },
+                    success: function (data) {
+
+                        if (data.GraphicType !== undefined) {
+                            var callback = window.Pear.Artifact.Designer._previewCallbacks;
+                            callback[data.GraphicType](data, that);
+                        }
+                        else if (data.type === "highlight") {
+                            var aneh = data.view.replace(/\"/g, "");
+                            console.log(aneh);
+                            that.html(aneh);
+                        } else if (data.type === "highlight" || data.type === "weather" ||
+                            data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type == "procurement" || data.type == "indicative-commercial-price" ||
+                            data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
+                            || data.type === "nls" || data.type === "key-equipment-status") {
+                            that.html(data.view);
+                        }
+                        /*else if (data.type === "weather" || data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "safety" ||
+                        data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type == "total-feed-gas"
+                        || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === 'mgdp') {
+                            that.html(data.view);
+                        }*/
+
+                    }
+                });
+            });
+        }
+
+        $('#currentDate').val('02/18/2016');
+        reloadView();
+        if ($('.der-display').length) {
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $("#currentDate").blur();
+                reloadView();
+            });
+        };
+    });
+</script>
+

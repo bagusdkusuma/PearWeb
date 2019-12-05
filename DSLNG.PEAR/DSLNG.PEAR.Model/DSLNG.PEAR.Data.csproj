@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0620FDEA-1C13-4823-92A5-452D930EFA10}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DSLNG.PEAR.Data</RootNamespace>
+    <AssemblyName>DSLNG.PEAR.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleCrypto, Version=26.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Activity.cs" />
+    <Compile Include="Entities\Artifact.cs" />
+    <Compile Include="Entities\ArtifactChart.cs" />
+    <Compile Include="Entities\ArtifactPlot.cs" />
+    <Compile Include="Entities\ArtifactRow.cs" />
+    <Compile Include="Entities\ArtifactSerie.cs" />
+    <Compile Include="Entities\ArtifactStack.cs" />
+    <Compile Include="Entities\ArtifactTank.cs" />
+    <Compile Include="Entities\AuditTrail.cs" />
+    <Compile Include="Entities\AuditUser.cs" />
+    <Compile Include="Entities\BaseAction.cs" />
+    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Blueprint\BusinessPostureIdentification.cs" />
+    <Compile Include="Entities\Blueprint\DesiredState.cs" />
+    <Compile Include="Entities\Blueprint\Challenge.cs" />
+    <Compile Include="Entities\Blueprint\Constraint.cs" />
+    <Compile Include="Entities\Blueprint\EnvironmentalScanning.cs" />
+    <Compile Include="Entities\Blueprint\EnvironmentsScanning.cs" />
+    <Compile Include="Entities\Blueprint\ESCategory.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseDescription.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseFormulation.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseFormulationStage.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPhaseKeyDriver.cs" />
+    <Compile Include="Entities\Blueprint\MidtermPlanningKpi.cs" />
+    <Compile Include="Entities\Blueprint\MidtermStrategyPlanning.cs" />
+    <Compile Include="Entities\Blueprint\MidtermStrategicPlanning.cs" />
+    <Compile Include="Entities\Blueprint\MidtermStrategicPlanningObjective.cs" />
+    <Compile Include="Entities\Blueprint\PlanningBlueprint.cs" />
+    <Compile Include="Entities\Blueprint\Posture.cs" />
+    <Compile Include="Entities\Blueprint\PostureChallenge.cs" />
+    <Compile Include="Entities\Blueprint\PostureConstraint.cs" />
+    <Compile Include="Entities\Blueprint\UltimateObjectivePoint.cs" />
+    <Compile Include="Entities\Buyer.cs" />
+    <Compile Include="Entities\CalculatorConstant.cs" />
+    <Compile Include="Entities\ConstantUsage.cs" />
+    <Compile Include="Entities\Conversion.cs" />
+    <Compile Include="Entities\DashboardTemplate.cs" />
+    <Compile Include="Entities\Der\Der.cs" />
+    <Compile Include="Entities\Der\DerArtifact.cs" />
+    <Compile Include="Entities\Der\DerArtifactChart.cs" />
+    <Compile Include="Entities\Der\DerArtifactPlot.cs" />
+    <Compile Include="Entities\Der\DerArtifactSerie.cs" />
+    <Compile Include="Entities\Der\DerArtifactTank.cs" />
+    <Compile Include="Entities\Der\DerInputFile.cs" />
+    <Compile Include="Entities\Der\DerLoadingSchedule.cs" />
+    <Compile Include="Entities\Der\DerOriginalData.cs" />
+    <Compile Include="Entities\Der\DerStaticHighlight.cs" />
+    <Compile Include="Entities\Der\DerHighlight.cs" />
+    <Compile Include="Entities\Der\DerItem.cs" />
+    <Compile Include="Entities\Der\DerLayout.cs" />
+    <Compile Include="Entities\Der\DerLayoutItem.cs" />
+    <Compile Include="Entities\Der\DerKpiInformation.cs" />
+    <Compile Include="Entities\Der\LayoutConfiguration.cs" />
+    <Compile Include="Entities\Der\LayoutConfigurationItem.cs" />
+    <Compile Include="Entities\EconomicModel\EconomicSummary.cs" />
+    <Compile Include="Entities\EconomicModel\KeyAssumptionData.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperationConfig.cs" />
+    <Compile Include="Entities\EconomicModel\Scenario.cs" />
+    <Compile Include="Entities\FileManagerRolePrivilege.cs" />
+    <Compile Include="Entities\Files\FileRepository.cs" />
+    <Compile Include="Entities\HighlightGroup.cs" />
+    <Compile Include="Entities\InputOriginalData\GroupInputData.cs" />
+    <Compile Include="Entities\InputOriginalData\InputData.cs" />
+    <Compile Include="Entities\InputOriginalData\InputDataKpiAndOrder.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformation.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformationLog.cs" />
+    <Compile Include="Entities\KpiTransformationEngine\KpiTransformationSchedule.cs" />
+    <Compile Include="Entities\MenuRolePrivilege.cs" />
+    <Compile Include="Entities\Mir\MirArtifact.cs" />
+    <Compile Include="Entities\Mir\MirConfiguration.cs" />
+    <Compile Include="Entities\Mir\MirDataTable.cs" />
+    <Compile Include="Entities\Mir\MirHighlight.cs" />
+    <Compile Include="Entities\Pop\PopDashboard.cs" />
+    <Compile Include="Entities\Pop\PopDashboardAttachment.cs" />
+    <Compile Include="Entities\Pop\PopInformation.cs" />
+    <Compile Include="Entities\Pop\Signature.cs" />
+    <Compile Include="Entities\ProcessBlueprint.cs" />
+    <Compile Include="Entities\ResetPassword.cs" />
+    <Compile Include="Entities\RolePrivilege.cs" />
+    <Compile Include="Entities\Select.cs" />
+    <Compile Include="Entities\SelectOption.cs" />
+    <Compile Include="Entities\Economic.cs" />
+    <Compile Include="Entities\EconomicModel\KeyAssumptionConfig.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOutputCategory.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOutputConfiguration.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOutputTemplate.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOutputTemplateItem.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperationGroup.cs" />
+    <Compile Include="Entities\EconomicModel\KeyOperationData.cs" />
+    <Compile Include="Entities\FormatInput.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\Highlight.cs" />
+    <Compile Include="Entities\EconomicModel\KeyAssumptionCategory.cs" />
+    <Compile Include="Entities\EconomicModel\KeyAssumptionStage.cs" />
+    <Compile Include="Entities\Kpi.cs" />
+    <Compile Include="Entities\KpiAchievement.cs" />
+    <Compile Include="Entities\KpiRelationModel.cs" />
+    <Compile Include="Entities\KpiTarget.cs" />
+    <Compile Include="Entities\LayoutColumn.cs" />
+    <Compile Include="Entities\LayoutRow.cs" />
+    <Compile Include="Entities\Level.cs" />
+    <Compile Include="Entities\Measurement.cs" />
+    <Compile Include="Entities\Menu.cs" />
+    <Compile Include="Entities\Method.cs" />
+    <Compile Include="Entities\NextLoadingSchedule.cs" />
+    <Compile Include="Entities\NLSHistory.cs" />
+    <Compile Include="Entities\Periode.cs" />
+    <Compile Include="Entities\StaticHighlightPrivilege.cs" />
+    <Compile Include="Entities\TransactionConfig.cs" />
+    <Compile Include="Entities\UserLogin.cs" />
+    <Compile Include="Entities\Vessel.cs" />
+    <Compile Include="Entities\VesselSchedule.cs" />
+    <Compile Include="Entities\Wave.cs" />
+    <Compile Include="Entities\Weather.cs" />
+    <Compile Include="Enums\ArtifactValueInformation.cs" />
+    <Compile Include="Enums\ConfigType.cs" />
+    <Compile Include="Enums\ConversionType.cs" />
+    <Compile Include="Enums\DerLayoutItemType.cs" />
+    <Compile Include="Enums\EnvirontmentType.cs" />
+    <Compile Include="Enums\Formula.cs" />
+    <Compile Include="Enums\KpiTransformationStatus.cs" />
+    <Compile Include="Enums\MirArtifactType.cs" />
+    <Compile Include="Enums\MirHighlightType.cs" />
+    <Compile Include="Enums\MirTableType.cs" />
+    <Compile Include="Enums\PeriodeStart.cs" />
+    <Compile Include="Enums\MonthPeriode.cs" />
+    <Compile Include="Entities\PmsSummaryScoringIndicator.cs" />
+    <Compile Include="Enums\PeriodeType.cs" />
+    <Compile Include="Entities\Pillar.cs" />
+    <Compile Include="Entities\PmsConfig.cs" />
+    <Compile Include="Entities\PmsConfigDetails.cs" />
+    <Compile Include="Entities\PmsSummary.cs" />
+    <Compile Include="Entities\RoleGroup.cs" />
+    <Compile Include="Entities\ScoreIndicator.cs" />
+    <Compile Include="Enums\PmsSummaryScoringIndicatorType.cs" />
+    <Compile Include="Enums\PopInformationType.cs" />
+    <Compile Include="Enums\PostureType.cs" />
+    <Compile Include="Enums\Privilege.cs" />
+    <Compile Include="Enums\ProcessingType.cs" />
+    <Compile Include="Enums\RangeFilter.cs" />
+    <Compile Include="Enums\ScoringType.cs" />
+    <Compile Include="Enums\SelectType.cs" />
+    <Compile Include="Enums\SeriesType.cs" />
+    <Compile Include="Enums\SignatureType.cs" />
+    <Compile Include="Enums\TargetType.cs" />
+    <Compile Include="Entities\Type.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums\TemplateColumnType.cs" />
+    <Compile Include="Enums\ValueAxis.cs" />
+    <Compile Include="Enums\YtdFormula.cs" />
+    <Compile Include="Enums\KpiMethod.cs" />
+    <Compile Include="Installer\KpiWithRelationModelInstaller.cs" />
+    <Compile Include="Installer\ActivityInstaller.cs" />
+    <Compile Include="Installer\MenuInstaller.cs" />
+    <Compile Include="Installer\MethodInstaller.cs" />
+    <Compile Include="Installer\PeriodeInstaller.cs" />
+    <Compile Include="Installer\PmsConfigDetailsInstaller.cs" />
+    <Compile Include="Installer\PmsConfigsInstaller.cs" />
+    <Compile Include="Installer\KpiAchievementsInstaller.cs" />
+    <Compile Include="Installer\GroupsInstaller.cs" />
+    <Compile Include="Installer\DataInitializer.cs" />
+    <Compile Include="Installer\KpisInstaller.cs" />
+    <Compile Include="Installer\KpiTargetsInstaller.cs" />
+    <Compile Include="Installer\LevelsInstaller.cs" />
+    <Compile Include="Installer\MeasurementsInstaller.cs" />
+    <Compile Include="Installer\PillarsInstaller.cs" />
+    <Compile Include="Installer\PmsSummariesInstaller.cs" />
+    <Compile Include="Installer\RoleGroupsInstaller.cs" />
+    <Compile Include="Installer\ScoreIndicatorsInstaller.cs" />
+    <Compile Include="Installer\TypeInstaller.cs" />
+    <Compile Include="Installer\UsersInstaller.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Persistence\DataContext.cs" />
+    <Compile Include="Persistence\IDataContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Migrations\basic-data.sql" />
+    <Content Include="Migrations\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

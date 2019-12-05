@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "Planning Blueprints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Planning Blueprints</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn-master-rgw btn btn-primary" })
+</div>
+@*@Html.Action("IndexPartial")
+
+    @section Scripts{
+        <script type="text/javascript">
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "AssumptionData")';
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
+        </script>
+    }*@
+
+<table id="planningBlueprints-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th rowspan="2">Title</th>
+            <th rowspan="2">Description</th>
+            <th colspan="3">Voyage Plan</th>
+            <th colspan="3">Mid Term Phase</th>
+            <th rowspan="2">Is Active</th>
+            <th rowspan="2">Action</th>
+        </tr>
+        <tr>
+            <th style="border-radius: 0; border-left: 1px solid white;">Environments Scanning</th>
+            <th>Business Posture Identification</th>
+            <th><span class="fa fa-file" aria-hidden="true"></span>Notes</th>
+            <th>Mid Term Phase Formulation</th>
+            <th>Mid Term Strategy Planning</th>
+            <th><span class="fa fa-file" aria-hidden="true"></span>Notes</th>
+        </tr>
+    </thead>
+</table>
+<div class="modal fade" id="notes-modal" data-id="id">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close btn-finish-relation" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Notes</h3>
+            </div>
+            <div class="modal-body" style="color:#fff">
+            </div>
+            <div class="modal-footer" style="border-top:none">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('click','.show-notes', function (e) {
+                var $this = $(this);
+                $('#notes-modal .modal-body').html($this.parent().find('.notes-value').html());
+            })
+            $('#planningBlueprints-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "PlanningBlueprint")',
+                "order": [[1, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Title", "name": "Title", "className": "dt-body-left" },
+                    { "mDataProp": "Description", "name": "Description", "className": "dt-body-left" },
+                     {
+                         "orderable": false,
+                         "data": null,
+                         "defaultContent": '',
+                         "mRender": function (data, type, row) {
+                             if (row.BusinessPostureIdentification.IsRejected) {
+                                 return '@Html.ActionLink("Rejected", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
+                             }
+                             else
+                             if (row.BusinessPostureIdentification.IsApproved) {
+                                 return '@Html.ActionLink("Approved", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
+                             } else if (row.BusinessPostureIdentification.IsBeingReviewed) {
+                                 return '@Html.ActionLink("Being Reviewed", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
+                             }
+                             return  '@Html.ActionLink("Prepare", "EnvironmentsScanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.EnvironmentsScanning.Id);
+                        }
+                     },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.BusinessPostureIdentification.IsRejected) {
+                                  return '@Html.ActionLink("Rejected", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                              }
+                              else if (row.BusinessPostureIdentification.IsApproved) {
+                                  return '@Html.ActionLink("Approved", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                              } else if (row.BusinessPostureIdentification.IsBeingReviewed) {
+                                  return '@Html.ActionLink("Being Reviewed", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                              } else if (row.BusinessPostureIdentification.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Prepare", "BusinessPostureIdentification", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.BusinessPostureIdentification.Id);
+                         }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.BusinessPostureIdentification.IsRejected) {
+                                  return '<a href="#" class="show-notes" data-toggle="modal" data-target="#notes-modal">View</a>' +
+                                      '<div class="notes-value">' + row.BusinessPostureIdentification.Notes + '</div>';
+                              }
+                              return '';
+                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return '@Html.ActionLink("Rejected", "MidtermPhaseFormulation", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermPhaseFormulation.Id);
+                              } else
+                              if (row.MidtermStragetyPlanning.IsApproved) {
+                                  return '@Html.ActionLink("Approved", "MidtermPhaseFormulation", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermPhaseFormulation.Id);
+                              } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
+                                  return '@Html.ActionLink("Being Reviewed", "MidtermPhaseFormulation", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermPhaseFormulation.Id);
+                              }  else if (row.MidtermPhaseFormulation.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Prepare", "MidtermPhaseFormulation", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermPhaseFormulation.Id);
+                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return '@Html.ActionLink("Rejected", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                              }else
+                              if (row.MidtermStragetyPlanning.IsApproved) {
+                                  return '@Html.ActionLink("Approved", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                              } else if (row.MidtermStragetyPlanning.IsBeingReviewed) {
+                                  return '@Html.ActionLink("Being Reviewed", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                              } else if (row.MidtermStragetyPlanning.IsLocked) {
+                                  return 'Locked';
+                              }
+                              return '@Html.ActionLink("Prepare", "MidtermStrategyPlanning", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', row.MidtermStragetyPlanning.Id);
+                          }
+                      },
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              if (row.MidtermStragetyPlanning.IsRejected) {
+                                  return '<a href="#" class="show-notes" data-toggle="modal" data-target="#notes-modal">View</a>' +
+                                      '<div class="notes-value">' + row.MidtermStragetyPlanning.Notes + '</div>';
+                              }
+                              return '';
+                          }
+                      },
+                    {
+                        "mDataProp": "IsActive", "name": "IsActive", "render": function (data, type, row) {
+                            var checked = '';
+                            if (data) {
+                                checked = 'checked="checked"';
+                            }
+                            return '<input type="checkbox" class="Prepareor-active" ' + checked + ' disabled="disabled">';
+                        },
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var PrepareLink = '<span class="fa fa-edit"></span> @Html.ActionLink("Edit", "Edit", "PlanningBlueprint", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return PrepareLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#planningBlueprints-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "PlanningBlueprint")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+
+        });
+    </script>
+}

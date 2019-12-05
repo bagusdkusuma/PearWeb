@@ -1,0 +1,389 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+@{
+    ViewBag.Title = "DER Layout Item Configuration " + Model.Type.ToString();
+}
+<h4>DER Layout Item Configuration</h4>
+
+@using (Html.BeginForm("SaveLayoutItem", "DerLayout", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.DerLayoutId)
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Column)
+    @Html.HiddenFor(model => model.Row)
+    <input id="OldType" name="OldType" type="hidden" value="@Model.Type">
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Type, Model.Types, "Select Type", new { style = "color:#000", @class = "der-layout-type" })
+            @*@Html.HiddenFor(model => model.Type)*@
+            @Html.ValidationMessageFor(model => model.Row)
+        </div>
+    </div>
+    <div class="form-group row layout-type-area" style="min-height: 50px; padding-left: 13px;">
+        @{
+            switch (Model.Type.ToLowerInvariant())
+            {
+                //case "line":
+                //    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Line.Edit.cshtml", Model);
+                //    break;
+                case "dafwc":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Dafwc.Edit.cshtml", Model);
+                    break;
+                case "pie":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Pie.Edit.cshtml", Model);
+                    break;
+                case "tank":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Tank.Edit.cshtml", Model);
+                    break;
+                case "line":
+                case "multiaxis":
+                case "jcc-monthly-trend":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
+                    break;
+                case "speedometer":
+                case "barmeter":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Speedometer.Edit.cshtml", Model);
+                    break;
+                case "highlight":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Highlight.Edit.cshtml", Model);
+                    break;
+                case "avg-ytd-key-statistic":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_AvgYtdKeyStatistic.Edit.cshtml", Model);
+                    break;
+                case "flare":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Flare.Edit.cshtml", Model);
+                    break;
+                case "temperature":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Temperature.Edit.cshtml", Model);
+                    break;
+                case "total-feed-gas":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_TotalFeedGas.Edit.cshtml", Model);
+                    break;
+                case "table-tank":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_TableTank.Edit.cshtml", Model);
+                    break;
+                case "mgdp":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_MGDP.Edit.cshtml", Model);
+                    break;
+                case "hhv":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_HHV.Edit.cshtml", Model);
+                    break;
+                case "lng-and-cds-production":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCdsProduction.Edit.cshtml", Model);
+                    break;
+                case "safety":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_SafetyTable.Edit.cshtml", Model);
+                    break;
+                case "procurement":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Procurement.Edit.cshtml", Model);
+                    break;
+                case "indicative-commercial-price":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_IndicativeCommercialPrice.Edit.cshtml", Model);
+                    break;
+                case "plant-availability":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_PlantAvailability.Edit.cshtml", Model);
+                    break;
+                case "lng-and-cds":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_LngAndCds.Edit.cshtml", Model);
+                    break;
+                case "economic-indicator":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_EconomicIndicator.Edit.cshtml", Model);
+                    break;
+                case "key-equipment-status":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_KeyEquipmentStatus.Edit.cshtml", Model);
+                    break;
+                case "security":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Security.Edit.cshtml", Model);
+                    break;
+                case "job-pmts":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_JobPmts.Edit.cshtml", Model);
+                    break;
+                case "weekly-maintenance":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_WeeklyMaintenance.Edit.cshtml", Model);
+                    break;
+                case "critical-pm":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_CriticalPm.Edit.cshtml", Model);
+                    break;
+                case "global-stock-market":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_GlobalStockMarket.Edit.cshtml", Model);
+                    break;
+                case "termometer":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_GlobalStockMarket.Edit.cshtml", Model);
+                    break;
+                case "reviewed-by":
+                case "prepared-by":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_User.Edit.cshtml", Model);
+                    break;
+                case "loading-duration":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_LoadingDuration.Edit.cshtml", Model);
+                    break;
+                case "person-on-board":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_PersonOnBoard.Edit.cshtml", Model);
+                    break;
+                case "total-commitment":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_TotalCommitment.Edit.cshtml", Model);
+                    break;
+                case "no2":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_NO2.Edit.cshtml", Model);
+                    break;
+                case "so2":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_SO2.Edit.cshtml", Model);
+                    break;
+                case "particulate":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Particulate.Edit.cshtml", Model);
+                    break;
+                case "ph":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_PH.Edit.cshtml", Model);
+                    break;
+                case "oil-grease":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_OilGrease.Edit.cshtml", Model);
+                    break;
+            }
+        }
+    </div>
+    <div class="col-md-12">
+        <div id="series-holder" class="form-inline graphic-properties">
+        </div>
+        <div id="plot-bands-holder" class="form-inline graphic-properties">
+        </div>
+        <div id="charts-holder" class="form-inline graphic-properties">
+        </div>
+        <div id="rows-holder" class="form-inline graphic-properties">
+        </div>
+    </div>
+    <div class="col-md-12 artifact-designer-btns">
+        <button type="submit" class="btn btn-primary btn-lg"><span class="fa fa-floppy-o"></span>Save</button>
+        @*<button data-preview-url="@Url.Action("Preview", "Artifact")" id="graphic-preview-btn" type="button" class="btn btn-primary btn-lg"><span class="fa fa-eye"></span>View</button>
+            <a onclick="location.reload();" class="btn btn-primary btn-lg"><span class="fa fa-repeat"></span>Clear</a>*@
+        <a href="@Url.Action("Config", "DerLayout", new { id = Model.DerLayoutId })" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Cancel</a>
+        <a href="@Url.Action("Delete", "DerLayout", new { id = Model.Id, type = Model.Type })" class="btn btn-primary btn-lg"><span class="fa fa-times"></span>Delete</a>
+    </div>
+            }
+
+
+<div id="hidden-fields-holder" data-kpi-url="@Url.Action("KpiList", "Artifact")"></div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.der-layout-type').change(function () {
+            var that = $(this);
+            var type = that.val().toLowerCase();
+            switch (type) {
+                case 'multiaxis':
+                case 'jcc-monthly-trend':
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var $hiddenFields = $('#hidden-fields');
+                            $('#hidden-fields-holder').html($hiddenFields.html());
+                            $hiddenFields.remove();
+                            var pear = window.Pear;
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            callback['multiaxis']();
+                        }
+                    });
+                    break;
+                case 'speedometer':
+                case 'barmeter':
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var $hiddenFields = $('#hidden-fields');
+                            $('#hidden-fields-holder').html($hiddenFields.html());
+                            $hiddenFields.remove();
+                            var pear = window.Pear;
+                            pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            callback['speedometer']();
+                        }
+                    });
+                    break;
+                case 'highlight':
+                    {
+                        $.ajax({
+                            url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                            success: function (data) {
+                                $('.layout-type-area').html(data);
+                            }
+                        });
+                        break;
+                    }
+                default:
+                    $.ajax({
+                        url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
+                        success: function (data) {
+                            $('.layout-type-area').html(data);
+                            var pear = window.Pear;
+                            var callback = pear.Artifact.Designer._setupCallbacks;
+                            console.log(that.val());
+                            callback[that.val()]();
+                        }
+                    });
+                    break;
+            }
+        });
+
+
+        switch ($('.der-layout-type').val()) {
+            case "line":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                        $this = $(val);
+                        $this.addClass('singlestack');
+                        $this.addClass($('#bar-value-axis').val());
+                        $this.addClass($('#graphic-type').val());
+                    });
+                    var seriesTemplate = $hiddenFields.find('.series-template.original');
+                    var seriesTemplateClone = seriesTemplate.clone(true);
+                    seriesTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(seriesTemplateClone);
+                    seriesTemplate.remove();
+                    $('#series-holder').append($hiddenFields.html());
+                    $('#series-holder').find('.series-template').each(function (i, val) {
+                        var $this = $(val);
+                        window.Pear.Artifact.Designer._kpiAutoComplete($this);
+                        window.Pear.Artifact.Designer._colorPicker($this);
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._setupCallbacks.line();
+                    break;
+                }
+            case "pie":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                        $this = $(val);
+                        $this.addClass($('#graphic-type').val());
+                    });
+                    var seriesTemplate = $hiddenFields.find('.series-template.original');
+                    var seriesTemplateClone = seriesTemplate.clone(true);
+                    seriesTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(seriesTemplateClone);
+                    seriesTemplate.remove();
+                    $('#series-holder').append($hiddenFields.html());
+                    $('#series-holder').find('.series-template').each(function (i, val) {
+                        var $this = $(val);
+                        window.Pear.Artifact.Designer._kpiAutoComplete($this);
+                        window.Pear.Artifact.Designer._colorPicker($this);
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._setupCallbacks.pie();
+                    break;
+                }
+            case "tank":
+                {
+                    $('.main-value-axis').css('display', 'none');
+                    $('.form-measurement').css('display', 'none');
+                    window.Pear.Artifact.Designer._setupCallbacks.tank();
+                    break;
+                }
+
+            case "speedometer":
+            case "barmeter":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    var plotTemplate = $hiddenFields.find('.plot-band-template.original');
+                    var plotTemplateClone = plotTemplate.clone(true);
+                    plotTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(plotTemplateClone);
+                    plotTemplate.remove();
+                    $('#plot-bands-holder').append($hiddenFields.html());
+                    $('#plot-bands-holder').find('.plot-band-template').each(function (i, val) {
+                        var $this = $(val);
+                        window.Pear.Artifact.Designer._colorPicker($this);
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                    window.Pear.Artifact.Designer._setupCallbacks.speedometer();
+                    break;
+                }
+            case "multiaxis":
+            case "jcc-monthly-trend":
+                {
+                    var $hiddenFields = $('#hidden-fields');
+                    var chartTemplate = $hiddenFields.find('.chart-template.original');
+                    var chartTemplateClone = chartTemplate.clone(true);
+                    chartTemplateClone.children('input:first-child').remove();
+                    $('#hidden-fields-holder').html(chartTemplateClone);
+                    chartTemplate.remove();
+                    $('#charts-holder').append($hiddenFields.html());
+                    $('#charts-holder').find('.chart-template').each(function (i, val) {
+                        var $thisTemplate = $(val);
+                        window.Pear.Artifact.Designer._colorPicker($thisTemplate.find('.value-axis-color'));
+                        $thisTemplate.find('.multiaxis-graphic-type').change(function (e) {
+                            e.preventDefault();
+                            var $this = $(this);
+                            window.Pear.Artifact.Designer.Multiaxis._loadGraph($this.data('graph-url'), $this.val(), $thisTemplate);
+                        });
+                        switch ($thisTemplate.find('.multiaxis-graphic-type').val()) {
+                            case 'line':
+                                var $hiddenFields = $thisTemplate.find('.hidden-fields');
+                                $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
+                                    $this = $(val);
+                                    $this.addClass('singlestack');
+                                    $this.addClass($thisTemplate.find('.value-axis-opt').val());
+                                    $this.addClass($thisTemplate.find('.multiaxis-graphic-type').val());
+                                });
+                                var seriesTemplate = $hiddenFields.find('.series-template.original');
+                                var seriesTemplateClone = seriesTemplate.clone(true);
+                                seriesTemplateClone.children('input:first-child').remove();
+                                $thisTemplate.find('.hidden-fields-holder').html(seriesTemplateClone);
+                                seriesTemplate.remove();
+                                $thisTemplate.find('.series-holder').append($hiddenFields.html());
+                                $thisTemplate.find('.series-holder').find('.series-template').each(function (i, val) {
+                                    var $this = $(val);
+                                    window.Pear.Artifact.Designer._kpiAutoComplete($this, true, $this.closest('.chart-template'));
+                                    window.Pear.Artifact.Designer._colorPicker($this);
+                                });
+                                $hiddenFields.remove();
+                                window.Pear.Artifact.Designer.Multiaxis._setupCallbacks.line($thisTemplate);
+                                break;
+                        }
+                    });
+                    $hiddenFields.remove();
+                    window.Pear.Artifact.Designer._setupCallbacks.multiaxis();
+                    break;
+                }
+            case "avg-ytd-key-statistic":
+            case "temperature":
+            case "total-feed-gas":
+            case "table-tank":
+            case "mgdp":
+            case "hhv":
+            case "lng-and-cds-production":
+            case "safety":
+            case "procurement":
+            case "indicative-commercial-price":
+            case "plant-availability":
+            case "lng-and-cds":
+            case "economic-indicator":
+            case "security":
+            case "job-pmts":
+            case "weekly-maintenance":
+            case "critical-pm":
+            case "global-stock-market":
+            case "termometer":
+            case "dafwc":
+            case "loading-duration":
+            case "person-on-board":
+            case "flare":
+            case "total-commitment":
+            case "no2":
+            case "so2":
+            case "particulate":
+            case "ph":
+            case "no2oil-grease":
+                {
+                    window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
+                    break;
+                }
+        }
+    });
+</script>
+

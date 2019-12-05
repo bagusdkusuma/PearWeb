@@ -1,0 +1,149 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    .mche-rundown-bar-wrapper .bar-percentage {
+        height: 17px;
+    }
+</style>
+<table class="table table-bordered top-bottom-border production">
+    <thead>
+        <tr>
+            <td style="width: 12.5%">PRODUCTION</td>
+            <td colspan="3">LNG</td>
+            <td colspan="3">
+                CDS
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                ACTUAL 24H
+            </td>
+            <td style="width: 12.5%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
+            </td>
+            <td style="width: 17%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+
+            </td>
+            <td style="width: 17%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "MMbtu","N/A",true,0)
+
+            </td>
+            <td style="width: 11%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
+
+            </td>
+            <td style="width: 13%">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "MMbtu", "N/A", true, 0)
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ACTUAL MTD
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "MMbtu", "N/A", true, 0)
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
+
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
+
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "MMbtu", "N/A", true, 0)
+
+
+            </td>
+        </tr>
+        <tr>
+            <td>ACTUAL YTD</td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "m3")
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "tonnes")
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "MMbtu", "N/A", true, 0)
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "bbl")
+
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "tonnes")
+
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "MMbtu", "N/A", true, 0)
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MCHE R/D Temp :
+            </td>
+            <td style="position:relative" class="mche-rundown-bar-wrapper">
+                @*@McheRundownPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value)*@
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 9).KpiMeasurement, "DegC")
+
+            </td>
+            <td style="text-align:right;border-right:none;">
+                LNG HHV : <span class="indicator">@Html.DisplayKpiIndicatorType3(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value)</span>
+            </td>
+            <td style="border-left:none">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "btu/scf")
+            </td>
+            <td style="text-align:right;border-right:none;">
+                CDS/Gas Ratio :                
+            </td>
+            <td style="text-align:right;border-right:none;    border-left: none;">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "bbl/MMscf")
+            </td>
+            <td style="text-align: right; position: relative">
+                <span class="indicator absolute">@Html.DisplayKpiIndicatorType1(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)</span>
+                CDS RVP : 
+                <span style="text-align:right">
+                    @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "Psia")
+                </span>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@helper McheRundownPercentage(string val)
+{
+if (!string.IsNullOrEmpty(val))
+{
+    var parsed = double.Parse(val);
+    if (parsed > 100) { parsed = 100; }
+    <div class="bar-percentage">
+        <div style="width:@string.Format(@"{0}%", parsed.ToString())">&nbsp;</div>
+    </div>
+}
+} 

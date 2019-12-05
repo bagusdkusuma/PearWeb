@@ -1,0 +1,235 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.GenerateViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>DER Preview</title>
+
+    <!-- Latest compiled and minified CSS -->
+    @Styles.Render("~/Content/der_preview")
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            height: auto;
+            width: 1532px;
+        }
+
+        /*.table.hhv tbody tr:first-child td {
+            height: 31px;
+        }*/
+
+        .table.hhv .special-height {
+            height: 12px;
+        }
+
+        .table.alert-condition tbody tr td {
+            height: 31px;
+        }
+        /*.table.alert-condition {
+            border-left:1px solid #444;
+        }*/
+        .impurities {
+            height: 173px;
+        }
+            .impurities .thermometer .bar-thermo {
+                left:18px;
+            }
+            .impurities .thermometer {
+                display:block !important;
+            }
+            .impurities .thermometer.preview {
+                display:none !important;
+            }
+
+        .table.security-incident {
+            border: 1px solid #444;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .table.plant-availability {
+            border: 1px solid #444;
+        }
+
+            .table.alert-condition tbody tr td,
+            .table.security-incident tbody tr td,
+            .table.hhv tbody tr td,
+            .table.hhv thead tr td,
+            .table.plant-availability thead tr td,
+            .table.flare thead tr td,
+            .table.plant-availability tbody tr td:first-child,
+            .table.flare tbody tr td:first-child,
+            .table.lng-loaded tbody tr td,
+            .table.cds-loaded tbody tr td,
+            .table.tank-table tbody tr td,
+            .table.weekly-maintenance tbody tr td,
+            .table.weekly-critical tbody tr td,
+            .table.key-equipment tbody tr td,
+            .table.procurement tbody tr td,
+            .table.indicative tbody tr td,
+            .table.production tbody tr td {
+                position: initial;
+            }
+
+        .table.procurement tbody tr:first-child td {
+            height: 18px;
+        }
+
+        /*.table.indicative thead tr td {
+            padding: 6px !important;
+        }*/
+
+        .table.ict-infra {
+            /*margin-top: 31px;*/
+        }
+
+        .co-macro-eco {
+            /*height: 268.5px;*/
+            /*height: 189.5px;*/
+            min-height:210px;
+        }
+
+        .psig {
+            height: 23px;
+            padding-left: 5px;
+        }
+
+        .table.production {
+            border-bottom: none !important;
+        }
+
+        .table.tank,
+        .table.tank thead tr td {
+            border-top: 1px solid #444;
+        }
+
+        .table.security-incident,
+        .table.security-incident tbody tr td:last-child {
+            border-right: none !important;
+        }
+
+        .table.alert-condition,
+        .table.alert-condition tr td {
+            border-left: 1px solid #444;
+        }
+
+        .table.signature,
+        .table.signature thead tr td {
+            border-top: 1px solid #444;
+            background-clip: padding-box;
+        }
+
+            .table.signature > tbody > tr > td {
+                height: 100%;
+            }
+
+        /*.table.global-stock tr td:last-child {
+             border-right:1px solid #444 !important;
+        }*/
+        .co-macro-eco {
+            border-bottom: none;
+        }
+
+        .table.security-incident tr td:first-child + td {
+            width: 33% !important;
+        }
+
+        .table.security-incident tr td:last-child {
+            width: 62% !important;
+        }
+        .table.hhv tbody tr:first-child td {
+            /*height:28px !important;*/
+        }
+        .table.total-feed-gas thead tr td:first-child {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+
+        .impurities > label {
+            margin-top: 20px !important;
+        }
+
+        .tank-wrapper.especially-for-you {
+            margin-bottom: 33px;
+        }
+
+        .first-row {
+            height: 20pt;
+            padding-top:8px;
+        }
+
+        .next-row {
+            height: 11pt;
+        }
+
+        .table.indicative thead tr td {
+            height: 11pt;
+        }
+            /*.indicative-titlehead {
+            font-size: 8.5pt;
+            padding: 4.5pt;
+            height: 25pt;
+        }
+
+        .indicative-titlediv {
+            display: table-cell;
+            height: 25pt;
+            vertical-align:middle;
+        }*/
+            .creditgroup {
+            display: none !important;
+        }
+        .textoverflow-clip {
+            text-overflow:ellipsis;
+            overflow:hidden;
+        }
+
+        .vertical-text-loading {
+            transform: rotate(270deg);
+            transform-origin: right top 0;
+            background: #1df560;
+            padding: 0px 5px;
+            position: absolute;
+            right: 17px;
+        }
+        .dubai-crude {
+            line-height: 1;
+            height: 22pt;
+            width: 68px;
+            text-align: right;
+            margin-left: 60px;
+            margin-bottom: 2px;
+        }
+        .dubai-crude-val {
+            vertical-align: middle;
+            margin: 0 auto;
+            padding-top: 8px;
+        }
+        .dubai-crude-val2 {
+            vertical-align: middle;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+        .commodities tbody tr:first-child td:nth-child(2),
+        .commodities tbody tr:first-child td:nth-child(3) {
+            vertical-align: middle;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    @Html.Raw(Model.Content)
+</body>
+</html>

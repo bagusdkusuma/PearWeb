@@ -1,0 +1,131 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+    <script type="text/javascript">
+        $('document').ready(function () {
+            setTimeout(function () {
+                if ($('#weekly-maintenance-backlog-highlight').length) {
+                    var x = $('#weekly-maintenance-backlog-highlight').html();
+                    $('#weekly-maintenance-backlog-highlight').remove();
+                    $('#weekly-maintenance-backlog-highlight-container').prepend(x);
+                }
+            }, 500); 
+        });
+    </script>
+<table class="table table-bordered weekly-maintenance" style="border:1px solid #444;border-bottom:none;border-left:none;">
+    <thead>
+        <tr>
+            <td colspan="6" style="border: 1px solid #444;border-bottom: none;border-left: none;position:initial;" id="weekly-maintenance-backlog-highlight-container">                
+                WEEKLY MAINTENANCE BACKLOG (as of @Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark )
+            </td>
+        </tr>
+    </thead>
+</table>
+
+
+<table class="table table-bordered weekly-maintenance top-bottom-border">
+    <thead>
+        
+        <tr>
+            <td style="width:12.5%">
+                Type
+            </td>
+            <td style="width:12.5%">
+                PM
+            </td>
+            <td style="width:17%">
+                CM
+            </td>
+            <td style="width:17%">
+                Total
+            </td>
+            <td colspan="2">
+                Remarks
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Weekly Backlog
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours", "N/A", true, 0)
+            </td>
+            <td style="width:12%">
+                Target
+                &lt;@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "hr", "N/A", true, 0)
+            </td>
+            <td>
+                @Html.DisplayDerRemarkJson(@Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark,"daily")
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@*@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayWeeklyMaintenanceViewModel
+
+@helper GetPercentage(string actual, string target, string measurement)
+{
+    double actualDouble;
+    bool isActualParsed = double.TryParse(actual, out actualDouble);
+
+    double targetDouble;
+    bool isTargetParsed = double.TryParse(target, out targetDouble);
+
+    if (isActualParsed && isTargetParsed)
+    {
+        var percentage = actualDouble / targetDouble * 100;
+        var x = string.Format("{0}% of {1} {2}", percentage, target, measurement);
+    @x
+    }
+    else
+    {
+    }
+}
+@{
+    var pos0 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 0);
+    var pos1 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 1);
+    var pos2 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 2);
+    var pos3 = Model.WeeklyMaintenanceViewModels.Single(x => x.Position == 3);
+    
+}
+<table class="der-table all-border">
+    <thead>
+        <tr>
+            <th colspan="6">WEEKLY MAINTENANCE BACKLOG (as of @Model.Date)
+            </th>
+        </tr>
+        <tr>
+            <th>Type
+            </th>
+            <th>PM
+            </th>
+            <th>CM
+            </th>
+            <th>Total
+            </th>
+            <th>Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Weekly Backlog
+            </td>
+            <td>@pos0.Weekly
+            </td>
+            <td>@pos1.Weekly
+            </td>
+            <td>@pos2.Weekly
+            </td>
+            <td>@pos3.Remarks
+            </td>
+        </tr>
+    </tbody>
+</table>*@

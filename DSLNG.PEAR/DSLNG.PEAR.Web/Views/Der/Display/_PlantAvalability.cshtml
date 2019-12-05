@@ -1,0 +1,164 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+<style>
+    /*.plant-availability {
+        border-collapse: separate;
+    }
+
+        .plant-availability tr td
+        {
+            border-right: none !important;
+            border-bottom: none !important;
+        }*/
+</style>
+<table class="table table-bordered top-bottom-border vertical-space plant-availability">
+    <thead>
+        <tr>
+            <td class="desc" style="font-size:12px;width: 19%;">Description</td>
+            <td style="width: 21%;font-size:12px;">Plant Availability (hour-daily)</td>
+            <td style="width: 20%;font-size:12px;">
+                Plant Thermal Efficiency
+            </td>
+            <td style="width: 20.5%;font-size:12px;">
+                Plant Flaring <span style="font-size:10px; display:inline-block">(%)</span>
+            </td>
+            <td style="width: 19.5%;font-size:10px;">
+                Plant intake Utilization (Feed/ Max.Cap)
+            </td>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="left-header">
+                ACTUAL 24H
+            </td>
+            <td>
+                @Html.DisplayPlantAvailablityIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0), Model.KpiInformationViewModels.Single(x => x.Position == 11),"asof")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value)
+                
+            </td>
+            <td>
+               @Html.DisplayPlantThermalIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1), Model.KpiInformationViewModels.Single(x => x.Position == 12), "asof")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+               @Html.DisplayMaterialBalanceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 2), Model.KpiInformationViewModels.Single(x => x.Position == 13), "asof")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+                @*@Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)*@
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
+
+            </td>
+            @*<td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "nm3")
+
+            </td>
+            <td rowspan="2" class="text-center" style="vertical-align:middle">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "tonnes")
+                
+            </td>
+            <td rowspan="2" class="text-center" style="vertical-align:middle">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "tonnes")
+                
+            </td>*@
+        </tr>
+        <tr>
+            <td class="left-header">
+                ACTUAL MTD
+            </td>
+            <td>
+                @Html.DisplayPlantAvailablityIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0), Model.KpiInformationViewModels.Single(x => x.Position == 11), "mtd")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd)
+            </td>
+            <td>
+                @Html.DisplayPlantThermalIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1), Model.KpiInformationViewModels.Single(x => x.Position == 12), "mtd")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+               @Html.DisplayMaterialBalanceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 2), Model.KpiInformationViewModels.Single(x => x.Position == 13), "mtd")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
+
+            </td>
+            @*<td>
+                @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Remark)
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "MMscf")
+            </td>*@
+        </tr>
+        <tr>
+            <td class="left-header">
+                Actual-YTD
+            </td>
+            <td>
+                @Html.DisplayPlantAvailablityIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0), Model.KpiInformationViewModels.Single(x => x.Position == 11), "ytd")
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd)
+                
+            </td>
+            <td>
+                @Html.DisplayPlantThermalIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1), Model.KpiInformationViewModels.Single(x => x.Position == 12), "ytd")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+               @Html.DisplayMaterialBalanceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 2), Model.KpiInformationViewModels.Single(x => x.Position == 13), "ytd")
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+                @*@Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)*@
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 3).KpiMeasurement, "%")
+
+            </td>
+            @*<td colspan="3" class="text-center second-header" style="font-size:11px;font-weight:bold;position:initial">
+                Total Fuel Gas (GTG-GTC-LP Fuel)
+            </td>*@
+
+        </tr>
+        <tr>
+            <td class="left-header">
+                @Model.DateInfo.Year Target
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValueForPlantAvailability(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Ytd)
+
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 11).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+                &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 12).KpiMeasurement, "%")
+                
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 13).KpiMeasurement, "%")
+                
+            </td>
+            @*<td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "MMscf")
+                
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 9).KpiMeasurement, "tonnes")
+                
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "MMbtu")
+                 
+            </td>*@
+        </tr>
+        <tr>
+            <td class="left-header" colspan="2">Total Fuel Gas (GTG-GTC-LP Fuel)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "MMscf")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 5).KpiMeasurement, "tonnes")</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 6).KpiMeasurement, "MMbtu","N/A",true,0)</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,218 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.HighlightOrder.HighlightOrderViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<div style="display:none">
+@Html.DropDownListFor(model => model.GroupId, Model.Groups,new{@class = "form-control highlight-groups", style="display:none"})
+@Html.DropDownListFor(model => model.RoleGroupIds, Model.RoleGroupOptions,new{@class = "form-control role-groups", multiple="multiple"})
+</div>
+@*<div class="highlight-orders">*@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="title " style="margin-bottom: 50px">Highlight Dashboard</div>
+              <table id="highlight-order-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+            <thead>
+            <tr> 
+                <th>
+                    Group
+                </th>
+                <th>
+                    Order
+                </th>
+                <th>
+                    Text
+                </th>
+                <th>
+                    IsActive
+                </th>
+                <th>
+                    Privilege
+                </th>
+            </tr>
+            </thead>
+        </table>
+    @section Scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('body').on('click', '.save-privilege', function (e) {
+                    e.preventDefault();
+                    var $form = $(this).closest('form');
+                    $.post($form.attr('action'), $form.serialize(), function (data) {
+                        location.reload();
+                    });
+                });
+
+                $("body").on("click", ".manage-privilege", function () {
+                    var $this = $(this);
+                    var title = $this.data('name');
+                    var groupId = $this.data('id');
+                    var type = $this.data('type');
+                   
+                    var modalHeader = $('<div/>');
+                    modalHeader.addClass('modal-header');
+                    modalHeader.html('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>');
+                    modalHeader.append($('<div/>').addClass('row').addClass('modal-header-detail').html('<div class="title">Privilege : ' + title  + '</div>'));
+                    var modalBody = $('<div/>');
+                    modalBody.addClass('modal-body');
+                    var form = $('<form />');
+                    if (type == "dynamic") {
+                        form.attr('action', '/highlightdashboard/save');
+                    } else {
+                        form.attr('action', '/highlightdashboard/SaveStatic');
+                    }
+                    form.attr('method', 'post');
+                    var hidInput = $('<input />');
+                    hidInput.attr('type', 'hidden');
+                    hidInput.attr('name', 'Id');
+                    hidInput.val(groupId);
+                    var button = $('<button />');
+                    button.attr('type', 'submit');
+                    button.addClass('btn btn-primary save-privilege');
+                    button.html('Save');
+                    form.append(hidInput);
+                    var roleGroupIds = $this.data('role-group-ids') + "";
+                    var groups = $('.role-groups').clone(true);
+                          $.each(roleGroupIds.split(","), function (i, e) {
+                              groups.find("option[value='" + e + "']").prop("selected", true);
+                          });
+                    form.append(groups);
+                    form.append($('<br />'));
+                    form.append(button);
+                    modalBody.html(form);
+                    var more = $('#modalDialog .modal-content');
+                    more.html('');
+                    more.append(modalHeader);
+                    more.append(modalBody);
+                    $('#modalDialog .modal-content').removeClass('ajax-loading');
+                });
+                $('#highlight-order-table').DataTable({
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "iDisplayLength": -1,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sServerMethod": "POST",
+                    "sAjaxSource": '@Url.Action("Grid", "HighlightDashboard")',
+                    "order": [[0, "asc"]],
+                    "aoColumns": [
+                          {
+                              "mDataProp": "GroupId", "name": "GroupId",
+                              "data": null,
+                              "defaultContent": '',
+                              "mRender": function (data, type, row) {
+                                  //console.log($('.highlight-groups').clone().val(row.GroupId));
+                                  var groups = $('.highlight-groups').clone();
+                                  groups.css('display', 'block');
+                                  groups.find('option:selected').removeAttr('selected');
+                                  if (row.GroupId != 0) {
+                                      groups.find('option').each(function (i, val) {
+                                          var optVal = $(val).val();
+                                          if (optVal == row.GroupId) {
+                                              $(val).attr('selected', 'selected');
+                                          }
+                                      });
+                                  }
+                                  groups = groups.val(row.GroupId).prop('outerHTML');
+                                  if (row.Id > 1000) {
+                                      return " --- ";
+                                  }
+                                  return '<form action="/HighlightDashboard/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '">' + groups + '</form>';
+                              }
+                          },
+                         {
+                             "mDataProp": "Order", "name": "Order", "sClass": "dt-head-center text-center",
+                             "render": function (data, type, row) {
+                                 if (row.Id > 1000) {
+                                     return " --- ";
+                                 }
+                                 return '<form action="/HighlightDashboard/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="number" class="highlight-order" name="Order" class="form-control" value="' + data + '"></form>';
+                             },
+                         },
+                       
+                        { "mDataProp": "Text", "name": "Text", "sClass": "dt-head-center text-left" },
+                        {
+                            "mDataProp": "IsActive", "name": "IsActive", "sClass": "dt-head-center text-center",
+                            "render": function (data, type, row) {
+                                var checked = '';
+                                if (data) {
+                                    checked = 'checked="checked"';
+                                }
+                                if (row.Id > 1000) {
+                                    return " --- ";
+                                }
+                                return '<form action="/HighlightDashboard/save" method="POST"><input type="hidden" name="Id" value="' + row.Id + '"><input type="checkbox"  class="highlight-is-active" ' + checked + ' ><input type="checkbox" value="True"  name="IsActive" class="highlight-is-active" style="display:none" checked="checked" ></form>';
+                            },
+                        },
+                        {
+                            "mDataProp": "Privilege", "name": "Privilage", "sClass": "dt-head-center text-center",
+                            "render": function (data, type, row) {
+                                if (row.Id > 1000) {
+                                    return '<a href="#" class="manage-privilege" data-type="static" data-role-group-ids="' + row.RoleGroupIds + '"  data-name="' + row.Text + '" data-id="' + (row.Id - 1000) + '" data-toggle = "modal", data-target = "#modalDialog" >Manage</a>';
+                                } else {
+                                    return '<a href="#" class="manage-privilege" data-type="dynamic" data-role-group-ids="' + row.RoleGroupIds + '" data-name="' + row.Text + '" data-id="' + row.Id + '" data-toggle = "modal", data-target = "#modalDialog" >Manage</a>';
+                                }
+                            },
+                        },
+                        //{
+                        //    "mDataProp": "Used", "name": "Used", "render": function (data, type, row) {
+                        //        var checked = '';
+                        //        if (data) {
+                        //            checked = 'checked="checked"';
+                        //        }
+                        //            return '<input type="checkbox" class="editor-active" '+checked+' disabled="disabled">';
+                        //    },
+                        //},
+                       @* {
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": '',
+                            "mRender": function(data, type, row) {
+                                var viewLink = '@Html.ActionLink("View", "View", new { Id = "_id_" }, new { @class="artifact-view" })'.replace('_id_', data.Id);
+                                var editLink = '@Html.ActionLink("Edit", "Edit", "Artifact", new { id = "_id_" }, null)'.replace('_id_', data.Id);
+                                var deleteLink = '<a href="javascript:confirmDelete(' + data.Id + ')">Delete</a>';
+                                return editLink + ' | ' + viewLink  + ' | ' + deleteLink;
+                            }
+                        }*@
+                    ],
+                    "fnDrawCallback": function (oSettings) {
+                        $('.highlight-order').keyup(function () {
+                            var form = $(this).closest('form');
+                            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            });
+                        });
+                        $('.highlight-groups').change(function () {
+                            var form = $(this).closest('form');
+                            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            });
+                        });
+                        $('.highlight-is-active').change(function () {
+                            var form = $(this).closest('form');
+                            if ($(this).is(":checked")) {
+                                form.find('input[name="IsActive"]').val('True');
+                            } else {
+                                form.find('input[name="IsActive"]').val('False');
+                            }
+                            $.post(form.attr('action'), form.serialize().replace(/item\./g, ''), function (data) {
+                            });
+                        });
+                    }
+                });
+            });
+            var confirmDelete = function (id) {
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("Delete", "Artifact")';
+                    $('<form action="' + url + '" method="POST">' +
+                        '<input type="hidden" name="id" value="' + id + '">' +
+                        '</form>').submit();
+                }
+            };
+        </script>
+    }
+        </div>
+    </div>
+    
+      @Html.Partial("_Modal")
+
+
+    @*</div>*@
+@*</div>*@

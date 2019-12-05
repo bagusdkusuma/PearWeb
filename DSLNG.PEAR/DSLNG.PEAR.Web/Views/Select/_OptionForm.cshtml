@@ -1,0 +1,144 @@
+﻿@model IList<DSLNG.PEAR.Web.ViewModels.Select.SelectOptionViewModel>
+@{
+    int i = 0;
+}
+
+<div class="form-group form-list form-inline">
+    <label>Options</label>
+    <button type="button" class="btn btn-default form-inline add-option"><i class="glyphicon glyphicon-plus"></i></button>
+</div>
+
+<div class="option-wrapper">
+    @foreach (var item in Model)
+    {
+        <div class="row hidden-option" style="margin-bottom: 10px;">
+            <div class="col-sm-12 form-inline">
+                <input type="hidden" name="Options.Index" value="@i" />
+                <input class="form-control opt-id" type="hidden" name="Options[@i].Id" value="@item.Id" style="width:50px;" />
+                <input class="form-control opt-text" name="Options[@i].Text" type="text" placeholder="Text" value="@item.Text" style="width:200px;">
+                @if (ViewData["Type"] == "Normal")
+                {
+                <input class="form-control opt-value" name="Options[@i].Value" type="text" placeholder="Value" value="@item.Value" style="width:200px;">
+                <input  class="form-control opt-value-file" name="Options[@i].ValueFile" type="file" placeholder="Value" value="@item.Value" style="display:none;width:200px;">
+                }
+                else
+                {
+                    <input  class="form-control opt-value" name="Options[@i].Value" type="text" placeholder="Value" value="@item.Value" style="display:none;width:200px;">
+                    <input  class="form-control opt-value-file" name="Options[@i].ValueFile" type="file" placeholder="Value" value="@item.Value" style="width:200px;">
+                    <span class="display-image" style="width:30px;height:30px;display:inline-block;padding:2.5px;background-color:#fff"><img src="~/Content/img/select/@item.Value"  style="width:100%;height:100%;display:inline-block"/></span>
+                }
+                <button type="button" class="btn btn-default form-control remove-option" style="display: inline-block;"><i class="glyphicon glyphicon-minus"></i></button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+                i++;
+    }
+</div>
+<span id="counter" data-option="@i"></span>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i = $('#counter').attr('data-option');
+        i = parseInt(i) === NaN ? 0 : parseInt(i);
+        $('#Type').change(function (e) {
+            e.preventDefault();
+            var type = $(this).val();
+            if (type == 'Normal') {
+                $('.opt-value').each(function (i, val) {
+                    var $val = $(val);
+                    $val.show();
+                    $val.val('');
+                    
+                });
+                $('.opt-value-file').each(function (i, val) {
+                    var $val = $(val);
+                    $val.hide();
+                });
+                $('.display-image').each(function (i, val) {
+                    var $val = $(val);
+                    $val.hide();
+                });
+            } else {
+                $('.opt-value-file').each(function (i, val) {
+                    var $val = $(val);
+                    $val.show();
+                    $val.val('');
+
+                });
+                $('.opt-value').each(function (i, val) {
+                    var $val = $(val);
+                    $val.hide();
+                });
+                $('.display-image').each(function (i, val) {
+                    var $val = $(val);
+                    $val.hide();
+                });
+            }
+        });
+        var type = $('#Type').val();
+        if (type == 'Normal') {
+            $('.opt-value').each(function (i, val) {
+                var $val = $(val);
+                $val.show();
+            });
+            $('.opt-value-file').each(function (i, val) {
+                var $val = $(val);
+                $val.hide();
+            });
+            $('.display-image').each(function (i, val) {
+                var $val = $(val);
+                $val.hide();
+            });
+        } else {
+            $('.opt-value-file').each(function (i, val) {
+                var $val = $(val);
+                $val.show();
+            });
+            $('.opt-value').each(function (i, val) {
+                var $val = $(val);
+                $val.hide();
+            });
+            $('.display-image').each(function (i, val) {
+                var $val = $(val);
+                $val.show();
+            });
+        }
+        $('.add-option').click(function () {
+            var type = $('#Type').val();
+            var clone = $('.hidden-option:last').clone(true);
+            clone.find('input[name="Options.Index"]').val(i);
+            clone.find('.opt-id').attr('name', 'Options[' + i + '].Id').attr('value', 0);
+            clone.find('.opt-text').attr('name', 'Options[' + i + '].Text').val('');
+            clone.find('.display-image').remove();
+            clone.find('.opt-is-edited').remove();
+            if (type == 'Normal') {
+                clone.find('.opt-value').show();
+                clone.find('.opt-value').attr('name', 'Options[' + i + '].Value').val('');
+                clone.find('.opt-value-file').hide();
+            } else {
+                clone.find('.opt-value-file').show();
+                clone.find('.opt-value-file').attr('name', 'Options[' + i + '].Value').val('');
+                clone.find('.opt-value').hide();
+            }
+            clone.appendTo('.option-wrapper').show();
+
+            if (i > 0) {
+                $('.remove-option').show();
+            }
+            i++;
+        });
+
+        if (i <= 1) {
+            $('.remove-option').hide();
+        }
+        $('.remove-option').click(function () {
+            i--;
+            $(this).parent().parent().remove();
+            if (i == 1) {
+                $('.remove-option').hide();
+            }
+        });
+    })
+</script>
+
+

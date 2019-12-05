@@ -1,0 +1,31 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PlanningBlueprint.EconomicIndicatorsViewModel
+
+@{
+    Layout = null;
+}
+
+@{
+    var count = Model.OutputCategories.Count;
+    for (var i = 0; i < count; i += 3)
+    {
+        <div class="row indicator-group">
+            @for (var j = i; j < i + 3; j++)
+            {
+                if (j < count)
+                {
+                    <div class="col-md-4">
+                        <h6 style="float:none">@Model.OutputCategories[j].Name</h6>
+                        <ul>
+                            @foreach (var keyOutput in Model.OutputCategories[j].KeyOutputs)
+                            {
+                                <li style="font-size: 12px;" data-id="@keyOutput.Id"><input name="checkthis" type="checkbox" value="@keyOutput.Id" />@keyOutput.Name</li>
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+        </div>
+    }
+}
+
+

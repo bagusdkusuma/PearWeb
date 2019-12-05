@@ -1,0 +1,151 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Calculator.PricingCalculatorViewModel
+@{
+    ViewBag.Title = "_Pricing";
+}
+<style>
+    .pricing-constanta-wrapper .form-horizontal label.control-label
+    {
+        text-align: left;
+        padding-left: 73px;
+        vertical-align: top;
+        padding-top: 0;
+    }
+
+    .pricing-category
+    {
+        margin-left: 42px;
+        font-size: 15px;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .pricing-result.form-horizontal label.control-label
+    {
+        padding: 0;
+        text-align: left;
+    }
+
+    .pricing-constanta-wrapper > div
+    {
+        margin-bottom: 20px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Pricing</h3>
+    </div>
+</div>
+<div class="row" style="margin-bottom: 0px; text-align: left; color: #ffffff">
+    <div class="col-md-12 form-inline">
+        <div class="form-group form-list">
+            @Html.LabelFor(model => model.JccPrice, new { style = "width:auto" })
+            @Html.TextBoxFor(model => model.JccPrice, new { @class = "form-control" })
+            USD/bbl
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h4>SPA Price</h4>
+        <div class="col-md-12">
+            <form class="form-horizontal pricing-result">
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">LNG SPA FOB</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-align-right" id="lng-spa-fob" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">LNG SPA DES</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-align-right" id="lng-spa-des" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">CDS Price</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-align-right" id="cds-price" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>GSA Price</h4>
+        <div class="col-md-12">
+            <form class="form-horizontal pricing-result">
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">Senoro Feed Gas</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-align-right" id="senoro-feed-gas" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">Matindok Feed Gas</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-align-right" id="matindok-feed-gas" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="resultTonnes" class="control-label col-md-4">Average Feed Gas</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control text-align-right" id="average-feed-gas" placeholder="">
+                    </div>
+                    <label for="resultTonnes" class="control-label col-md-2"></label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<a href="javascript:;" class="show-pricing-constant pull-right">Show Constant</a><br/>
+<hr/>
+<div class="row constant-pricing-wrapper">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <span class="pricing-category">SPA Constant</span>
+        </div>
+        <form class="form-horizontal production-yield-all constants">
+            @foreach (var constant in Model.SpaConstants)
+            { 
+                <div class="form-group">
+                    <label class="col-md-4 control-label">@constant.DisplayName</label>
+                    <div class="col-md-5">
+                        @Html.HiddenFor(m => constant.Id)
+                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant text-align-right" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>@constant.Measurement</label>
+                    </div>
+                </div>    
+            }
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12">
+            <span class="pricing-category">GSA Constant</span>
+        </div>
+        <form class="form-horizontal production-yield-all constants">
+            @foreach (var constant in Model.GsaConstants)
+            { 
+                <div class="form-group">
+                    <label class="col-md-4 control-label">@constant.DisplayName</label>
+                    <div class="col-md-5">
+                        @Html.HiddenFor(m => constant.Id)
+                        @Html.TextBoxFor(m => constant.Value, new { @class = constant.Name + " calculator-constant text-align-right" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>@constant.Measurement</label>
+                    </div>
+                </div>    
+            }
+        </form>
+    </div>
+</div>
+

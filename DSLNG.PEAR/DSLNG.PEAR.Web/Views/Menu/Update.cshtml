@@ -1,0 +1,95 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Menu.UpdateMenuViewModel
+@{
+    ViewBag.Title = "Edit Menu";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-12">
+        <form action="@Url.Action("Update")" method="POST">
+            @Html.HiddenFor(model => model.Id)
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ParentId, new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.ParentId, Model.MenuOptions, "Select Parent Menu", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ParentId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Order, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Order)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Remark, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Remark, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Remark)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Module, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Module, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Module)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsRoot, new { @class = "control-label" })
+                        @Html.EditorFor(model => model.IsRoot, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsRoot)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                        @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsActive)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RoleGroupIds, new { @class = "control-label" })
+                        @Html.ListBoxFor(model => model.RoleGroupIds, Model.RoleGroupOptions,new { @class = "form-control", @size = "7" })
+                        @Html.ValidationMessageFor(model => model.RoleGroupIds)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Icon, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
+                        @*<div class="well well-sm">
+                            @for (int i = 0; i < Model.IconList.Length; i++)
+                            {
+                                var class_success = Model.Icon == Model.IconList[i] ? "btn-success":"";
+                                <button type="button" class="btn btn-default btn-sm btn-icon @class_success"><i class="fa @Model.IconList[i]" icon-name="@Model.IconList[i]"></i></button>
+                            }
+                        </div>*@
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Url, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.Url, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Url)
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button.btn-icon").on("click", function () {
+            $('.btn-icon').each(function () {
+                $(this).removeClass("btn-success");
+            });
+
+            $(this).addClass("btn-success");
+            //set icon class name as value for input[Icon]
+            var $Icon = $(this).find('i');
+            $("input#Icon").val($Icon.attr("icon-name"));
+        });
+    })
+</script>

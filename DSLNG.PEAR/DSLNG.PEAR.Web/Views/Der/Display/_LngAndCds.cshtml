@@ -1,0 +1,177 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+
+<style>
+    .lng-loaded,.cds-loaded {
+        border-collapse: collapse;
+        border: 1px solid #444;
+        border-right: none;
+    }
+
+    /*.lng-loaded  tr td,
+    .cds-loaded  tr td{
+        border-right: none !important;
+        border-bottom: none !important;
+    }*/
+</style>
+<table class="table table-bordered lng-loaded top-bottom-border">
+    <thead>
+        <tr>
+            <td style="width: 12%; text-align: left;font-size:12px">
+                LNG LOADED
+            </td>
+            <td style="width: 13.2%;font-size:12px">
+                m3
+            </td>
+            <td style="width: 12.5%;font-size:12px">
+                tonnes
+            </td>
+            <td style="width: 12.7%;font-size:12px">
+                MMbtu
+            </td>
+            <td style="width: 12.5%;font-size:12px" class="cargo">
+                #Cargo Shipped
+            </td>
+            <td class="right-header" style="font-size:12px">
+                Planned Cargoes (ADP @Model.DateInfo.Year)
+            </td>
+            <td style="width: 13%;font-size:12px" class="right-header">
+                Remarks
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
+                ACTUAL MTD
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd, string.Empty, string.Empty, "N/A", true, 0)
+                @*@Html.DisplayCompleteDerValueForMmbtu(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Mtd)*@
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, string.Empty, string.Empty, "N/A", true, 0)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Mtd, string.Empty, string.Empty, "-",false,0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 17).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0) Kogas,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0) QE;
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0) JER,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 20).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0) Spot,
+                @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Mtd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Mtd, string.Empty, string.Empty, "-") Adv;*@
+                ttl @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Mtd, string.Empty, string.Empty, "-", false, 0)
+            </td>
+            <td>
+                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark, "daily")
+            </td>
+        </tr>
+        <tr>
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
+                ACTUAL YTD 
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd, string.Empty, string.Empty,"N/A",true,0)
+                @*@Html.DisplayCompleteDerValueForMmbtu(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Ytd)*@
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Ytd, string.Empty, string.Empty, "-", true, 0)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, string.Empty, "-",false,0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 17).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0) Kogas,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0) QE,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 18).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0) JER,
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 20).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0) Spot;
+                @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Ytd, string.Empty, string.Empty, "-") / @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd, string.Empty, string.Empty, "-") Cargo Adv;*@
+                Total @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0)/@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 22).DerItemValue.Ytd, string.Empty, string.Empty, "-", false, 0) cargos
+            </td>
+            <td>
+                @Html.DisplayDerRemarkJsonForLngAndCds(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark, "daily")
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-bordered cds-loaded vertical-space">
+    <thead>
+        <tr>
+            <td style="width: 12%; text-align: left;font-size:12px;font-weight:bold">
+                CDS LOADED
+            </td>
+            <td style="width: 13.2%;font-size:12px;">
+                m3
+            </td>
+            <td style="width: 12.5%;font-size:12px;">
+                tonnes
+            </td>
+            <td style="width: 12.7%;font-size:12px;">
+                Bbls
+            </td>
+            <td style="width: 12.5%;font-size:12px;" class="cargo">
+                #Cargo Shipped
+            </td>
+            <td class="right-header" style="font-size:12px;">
+                Note
+            </td>
+            <td style="width:13%;font-size:12px;" class="right-header">
+                Remarks
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
+                ACTUAL MTD
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Mtd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Mtd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Mtd, string.Empty, string.Empty,"-",true,0)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Mtd, string.Empty, string.Empty, "-", true, 0)
+            </td>
+            <td rowspan="2">
+                @Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Remark
+            </td>
+            <td rowspan="2">
+                @Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Remark
+                @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 15).KpiMeasurement, "m3")*@
+            </td>
+        </tr>
+        <tr>
+            <td class="vertical-header" style="font-size:11px;font-weight:bold">
+                ACTUAL YTD
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Ytd, string.Empty, string.Empty)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Ytd, string.Empty, string.Empty, "-", true, 0)
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, string.Empty, string.Empty, "-", true, 0)
+            </td>
+            @*<td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 16).DerItemValue.Mtd, Model.KpiInformationViewModels.Single(x => x.Position == 16).KpiMeasurement, "bbl")
+
+            </td>*@
+        </tr>
+    </tbody>
+</table>

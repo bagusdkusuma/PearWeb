@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Operational Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Operational Data List</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</div>
+@*@Html.Action("IndexPartial")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "OperationalData")';
+                $('<form action="' + url + '" method="POST">' +
+                    '<input type="hidden" name="id" value="' + id + '">' +
+                    '</form>').submit();
+            }
+        };
+    </script>
+}*@
+
+
+<table id="operational-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Scenario</th>
+            <th>Key Operation</th>
+            <th>KPI</th>
+            <th>Value</th>
+            <th>Remark</th>
+            <th>Periode</th>
+            <th>Periode Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#operational-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "OperationalData")',
+                "order": [[3, "asc"]],
+                "aoColumns": [
+                    { "mDataProp": "Scenario", "name": "Scenario" },
+                    { "mDataProp": "KeyOperation", "name": "KeyOperation" },
+                    { "mDataProp": "Kpi", "name": "Kpi" },
+                    { "mDataProp": "Value", "name": "Value" },
+                    { "mDataProp": "Remark", "name": "Remark", "sortable": false },
+                    { "mDataProp": "Periode", "name": "Periode" },
+                    { "mDataProp": "PeriodeType", "name": "PeriodeType" },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            var editLink = '@Html.ActionLink("Edit", "Edit", "OperationalData", new {id = "_id_"}, null)'.replace('_id_', data.Id);
+                            return editLink + ' | ' + deleteLink;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $('#operational-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?' + id)) {
+                    var url = '@Url.Action("Delete", "Operation")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+
+        });
+    </script>
+}

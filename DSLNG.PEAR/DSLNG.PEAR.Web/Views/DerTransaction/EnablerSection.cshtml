@@ -1,0 +1,220 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+<div class="col-md-12">
+    <div class="col-md-4">
+        <!--263-->
+        <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+            <tr>
+                <td>
+                    <label class="subtitle">Procurement :</label>
+                    @*<p style="margin-top: 20px;">Procurement Section-E:</p>*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">#backlog</label>
+                    <br />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 268, "number", "prev","daily-actual","value","","40",3)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Remark</label>
+                    <br />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 379, 269, "free text", "prev", "daily-actual", "remark","","300")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Avg backlog</label>
+                    <br />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 270, "number", "prev", "daily-actual", "value", "", "40",3)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Avg backlog-Target</label>
+                    <br />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 380, 271, "number", "prev", "daily-target", "value", "", "40",3)
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+            <tr>
+                <td>
+                    <label class="subtitle">ICT Infrastructure and System :</label>
+                    @*<p for="" style="margin-top: 10px; color:#FFFFFF;" class="subtitle">ICT Infrastructure and System Highlight:-F</p>*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="" >Application</label>
+                    <br />
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                    new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 272, "a")
+                    @*<select>
+                            <option>Select Option</option>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="" >Colaboration</label>
+                    <br />
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 273, "b")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Telco</label>
+                    <br />
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 274, "c")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
+                    &nbsp;
+                    <br />
+                    &nbsp;
+                    <br />
+                    <label for="" style="margin-top: 13px;">Remark</label>
+                    <br />
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 21, 275, "Normal Ops")
+                    @*@Html.DisplayHighlightInput(Model.Highlights, 21, 274, "free text", "prev")*@
+                    @*<input type="text" name="" id="" placeholder="free text" />*@
+                    @*@Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 66, new List<SelectListItem>{
+                             new SelectListItem { Text = "Option 1", Value = "Option 1" },
+                                 new SelectListItem { Text = "Option 2", Value = "Option 2" },
+                        }, 269, "remark")*@
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table width="400" border="0" cellpadding="2" cellspacing="2" style="margin-top: 15px; margin-bottom: 15px;">
+            <tr>
+                <td>
+                    <label class="subtitle">GS & FM :</label>
+                    @*<p for="" style="margin-top: 20px;">GS & FM-G:</p>*@
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="" >POB</label>
+                    <br />
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 36, 276, "number", "prev","daily-actual","value","","49",3)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">F&B</label>
+                    <br />
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
+                 new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 277, "a")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Camp</label>
+                    <br />
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
+                   new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 278, "b")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="">Transp</label>
+                    <br />
+                    @Html.DisplayIctInfraOrGsfmHighlight(Model.Highlights, 67, new List<SelectListItem>{
+                  new SelectListItem { Text = "-1", Value = "-1" },
+                        new SelectListItem { Text = "0", Value = "0" },
+                         new SelectListItem { Text = "1", Value = "1" },
+               }, 279, "c")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @*<label for="" style="margin-top: 20px;">Remark</label>*@
+                    <br />
+                    <table border="0">
+                        <tr>
+                            <td><label class="control-label">Remark</label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayHighlightTextarea(Model.Highlights, 53, 280, "Normal Ops")
+                            </td>
+                        </tr>
+                    </table>
+                    @*@Html.DisplayHighlightTextarea(Model.Highlights, 53, 273)*@
+                    @*<input type="text" name="" id="" placeholder="free text" />*@
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top: 30px;">
+    <div class="col-md-6">
+        <p style="color: white;" class="subtitle">Community Relation and Govt Engagement Highlight-H:</p>
+        <table border="0">
+            <tr>
+                <td>
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 14, 281)
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <p style="color: white;" class="subtitle">Daily Highlight:</p>
+        <table border="0">
+            <tr>
+                <td>
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 8, 282, "Normal Ops")
+                </td>
+            </tr>
+            <tr>
+                <td><br><label class="control-label subtitle">Traffic Light:</label></td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayHighlightDropdownList(Model.Highlights, 58, new List<SelectListItem> {
+                   new SelectListItem {Value = "1", Text = "1" },
+                   new SelectListItem {Value = "2", Text = "2" },
+                   new SelectListItem {Value = "3", Text = "3" },
+                   new SelectListItem {Value = "4", Text = "4" },
+                   new SelectListItem {Value = "5", Text = "5" }
+               }, 283, "prev")
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿@Html.DevExpress().UploadControl(settings =>
+{
+    settings.Name = "uc";
+    settings.CallbackRouteValues = new { Controller = "File", Action = "UploadControlCallbackAction" };
+    settings.ClientSideEvents.FileUploadComplete = "OnFileUploadComplete";
+    settings.ClientSideEvents.TextChanged = "OnUploadTextChanged";
+    settings.ShowProgressPanel = true;
+    settings.ValidationSettings.Assign(DSLNG.PEAR.Web.Extensions.ExcelUploadHelper.ValidationSettings);
+}).GetHtml()
+

@@ -1,0 +1,98 @@
+﻿@using DSLNG.PEAR.Common.Contants
+@model DSLNG.PEAR.Web.ViewModels.Pillar.UpdatePillarViewModel
+@{
+    ViewBag.Title = "Edit Pillar";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.pillar-colpick > input').colpick({
+            submit: 0,
+            onChange: function (hsb, hex, rgb, el, bySetColor) {
+                $('.pillar-colpick > input').closest('.colorpicker').find('i').css('background-color', '#' + hex);
+                if (!bySetColor) $(el).val('#' + hex);
+            }
+        }).keyup(function () {
+            $(this).colpickSetColor(this.value.replace('#', ''));
+        });
+
+        $('.pillar-icon').click(function () {
+            var that = $(this);
+            $('.pillar-icon').removeClass('pillar-icon-selected');
+            that.addClass('pillar-icon-selected');
+            $('#Icon').val(that.attr('data-icon').split('\\')[that.attr('data-icon').split('\\').length - 1]);
+        });
+    });
+</script>
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row">
+    <div class="col-md-4">
+        <form action="@Url.Action("Update")" method="POST" enctype="multipart/form-data">
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Code, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Code)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Order, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Order, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Order)
+            </div>
+            <div class="form-group form-list">
+                <label>Color</label>
+                <div class="input-group pillar-colpick colorpicker">
+                    @Html.TextBoxFor(x => x.Color, new { @class = "form-control" })
+                    <span class="input-group-addon"><i style="background-color: @Model.Color"></i></span>
+                </div>
+                @Html.ValidationMessageFor(x => x.Color)
+            </div>
+            <div class="form-group" style="margin-left: 10px;">
+                <a class="btn btn-flat btn-lightblue" data-toggle="modal" data-target="#modalDialog">Upload New Icon</a>
+            </div>
+            <div class="form-group" style="display: inline-block">
+                @Html.HiddenFor(model => model.Icon)
+                @foreach (var item in Model.Icons)
+                {
+                    var icon = item.Split('\\')[item.Split('\\').Length - 1];
+                    var selected = "";
+                    if (icon == Model.Icon)
+                    {
+                        selected = "pillar-icon-selected";
+                    }
+                    <div class="icon-wrapper">
+                        <div class="pillar-icon @selected" data-icon="@item">
+                            <img style="margin:0 auto;display: block" src="@Url.Content(PathConstant.PillarPath)/@icon"/>
+                            <span style="font-size: 11px; color: #ffffff">@icon</span>
+                        </div>
+                        <a href="@Url.Action("DeleteIcon", "Pillar", new {name = icon, redirectAction = "Update/" + Model.Id})" onclick="return confirm('Are you sure you want to delete this icon?')" class="delete-icon">Delete</a>
+                    </div>
+                    
+                }
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Remark, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Remark, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Remark)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Kpi/_Upload.cshtml", Model.Upload)

@@ -1,0 +1,87 @@
+﻿@using System.Linq;
+@model DSLNG.PEAR.Web.ViewModels.PmsConfigDetails.UpdatePmsConfigDetailsViewModel
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h5>Update Pms Config Detail</h5>
+</div>
+<div class="modal-body">
+    <form class="form-group" action="@Url.Action("Update")" method="POST">
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group form-list">
+            <label>Pillar : </label>
+            @Model.PillarName
+        </div>
+
+        @*<div class="form-group form-list">
+            <label>KPI Name : </label> @Model.KpiName
+        </div>*@
+
+        <div class="form-group form-list">
+            <label>KPI</label>
+            @Html.DropDownListFor(x => x.KpiId, Model.Kpis, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.KpiId)
+        </div>
+        <div class="form-group form-list">
+            <label>Scoring Type</label>
+            @Html.DropDownListFor(x => x.ScoringType, Model.ScoringTypes, new { @class = "form-control scoring-type" })
+            @Html.ValidationMessageFor(x => x.ScoringType)
+        </div>
+
+        <div class="form-group form-list target" style="display: none">
+            <label>Target</label>
+            @Html.DropDownListFor(x => x.Target, Model.Targets, "Select Target From Scoring Indicator", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Target)
+        </div>
+
+        <div class="form-group form-list">
+            <label>Weight</label>
+            @Html.TextBoxFor(x => x.Weight, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Weight)
+        </div>
+
+        @Html.Partial("_ScoringIndicator", Model.ScoreIndicators)
+        <div class="centering margin">
+            <hr style="margin-bottom: 60px;">
+            <a href="#" onclick="$(this).closest('form').submit()" class="btn-darkblue btn-large"><span class="fa fa-floppy-o"></span>Save</a>
+            @*<a href="#" class="btn-darkblue btn-large"><span class="fa fa-repeat"></span>Clear</a>*@
+            <a href="javascript:;" data-dismiss="modal" aria-label="Close" class="btn-darkblue btn-large"><span class="fa fa-times"></span>Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model.ScoringType' == 'Boolean') {
+            $('.target').show();
+        }
+
+        $('.scoring-type').change(function () {
+            if ($(this).val() == 'Boolean') {
+                $('.target').show();
+            } else {
+                //$('.target').val('');
+                $('.target').hide();
+            }
+        });
+
+        //$('#Target').click(function () {
+            $('#Target').html('<option value="">Select Target From Scoring Indicator</option>');
+            $('.si-expression').each(function (idx, v) {
+                var target = '@Html.Raw(Model.Target)';
+                var val = $(v).val();
+                var selected = val == target ? 'selected' : '';
+                console.log(target);
+                console.log(val);
+                console.log(selected);
+                $('#Target').append('<option value="' + val + '" '+ selected +'>' + val + '</option>');
+            });
+            
+        //});
+
+    });
+</script>
+

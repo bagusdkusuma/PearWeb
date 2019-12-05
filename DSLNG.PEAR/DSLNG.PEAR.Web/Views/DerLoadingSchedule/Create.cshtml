@@ -1,0 +1,214 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.VesselSchedule.VesselScheduleViewModel
+
+<style>
+    .vessel-schedule-save label {
+        width: 100px;
+    }
+</style>
+<div class="vessel-schedule-save">
+    <div class="row">
+        @using (Html.BeginForm("Create","DerLoadingSchedule",FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-12">
+                <div><ul class="validation-summary" style="color:red"></ul></div>
+                <div><ul class="success-message" style="color:green"></ul></div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-inline whitebox">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.VesselId)
+                        @Html.DropDownListFor(model => model.VesselId, Model.Vessels, "Select Vessel", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.VesselId)
+                        @*<a href="javascript:;" class="btn btn-primary" id="add_vessel_from_modal" onclick="test()"><span class="fa fa-plus-square"></span>Add New Vessel</a>*@
+                        <button data-url='@Url.Action("AddVessel", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-vessel" tabindex="-1"><span class="fa fa-plus-square"></span> Add New</button>
+                    </div>
+                    @*<div hidden="hidden" id="vessel_form"></div>*@
+                    <div id="vessel-container">
+                        @*<div id="vessel_form"></div>*@
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ETA)
+                        @Html.TextBoxFor(model => model.ETA, new { @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(model => model.ETA)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.ETD)
+                        @Html.TextBoxFor(model => model.ETD, new { @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(model => model.ETD)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.BuyerId)
+                        @Html.DropDownListFor(model => model.BuyerId, Model.Buyers, "Select Buyer", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BuyerId)
+                        <button data-url='@Url.Action("AddBuyer", "DerLoadingSchedule")' class="btn btn-master-rgw btn-primary add-new-buyer" tabindex="-1"><span class="fa fa-plus-square"></span> Add New</button>
+                    </div>
+                    <div id="buyer-container">
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Location)
+                        @Html.TextAreaFor(model => model.Location, 5, 50, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Location)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.SalesType)
+                        @Html.DropDownListFor(model => model.SalesType, Model.SalesTypes, "Select Cargo Type", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SalesType)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Type)
+                        @Html.DropDownListFor(model => model.Type, Model.Types, "Select DES/FOB", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Type)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.Cargo)
+                        @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cargo)
+                    </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.IsActive)
+                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IsActive)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 artifact-designer-btns">
+                <button type="submit" class="btn btn-primary btn-lg save"><span class="fa fa-floppy-o"></span>Save</button>
+                <a href="javascript:;" class="btn btn-primary btn-lg close-modal"><span class="fa fa-times"></span>Cancel</a>
+            </div>
+        }
+    </div>
+</div>
+<script>
+
+    @*function test() {
+        $.get('@Url.Action("AddNewVessel", "DerLoadingSchedule")', function (response) {
+            console.log('called');
+            if (response != null) {
+                console.log('ada isinya');
+                console.log(response.Message);
+            }
+        });
+    }*@
+
+    jQuery.extend(jQuery.expr[':'], {
+        focusable: function (el, index, selector) {
+            return $(el).is('a, button, :input, [tabindex]');
+        }
+    });
+
+    //function canFocus(e) {
+    //    if (!e.is(":hidden") && !e.is(":disabled")) {
+    //        return false;
+    //    }
+
+    //    var tabIndex = +e.attr("tabindex");
+    //    tabIndex = isNaN(tabIndex) ? -1 : tabIndex;
+    //    return e.is(":input, a[href], area[href], iframe") || tabIndex > -1;
+    //}
+
+    $(document).ready(function () {
+        $(document).find('#VesselId').focus();
+
+        $('.datepicker').datetimepicker({
+            format: "MM/DD/YYYY"
+        });
+
+        //$(document).on('keypress', 'input,select', function (e) {
+        //    console.log(e.which.toString());
+        //    if (e.which == 13) {
+        //        console.log('called');
+        //        e.preventDefault();
+        //        // Get all focusable elements on the page
+        //        var $canfocus = $(':focusable');
+        //        var index = $canfocus.index(this) + 1;
+        //        console.log(index);
+        //        if (index >= $canfocus.length) index = 0;
+        //        var $el = $canfocus.eq(index);
+        //        var tabIndex = $el.attr("tabindex");
+        //        tabIndex = isNaN(tabIndex) ? -1 : tabIndex;
+
+        //        if (tabIndex > -1) {
+        //            console.log('tabbable');
+        //            $canfocus.eq(index).focus();
+        //        } else {
+        //            console.log(' not tabbable');
+        //            index = $canfocus.index($el) + 1;
+        //            $canfocus.eq(index).focus();
+        //        }
+                
+        //    }
+        //});
+
+        $('.add-new-vessel').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = $('#vessel-container');
+            container.append('<div id="vessel_form"></div>')
+            var $vessel_form = $('#vessel_form'), url = $(this).data('url');
+            $.get(url, function (data) {
+                $vessel_form.html(data);
+            });
+        });
+
+        $('.add-new-buyer').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = $('#buyer-container');
+            container.append('<div id="buyer_form"></div>')
+            var $buyer_form = $('#buyer_form'), url = $(this).data('url');
+            $.get(url, function (data) {
+                $buyer_form.html(data);
+            });
+        });
+
+        $('.save').click(function (e) {
+            e.preventDefault();
+            $form = $(this).closest('form');
+            $.post($form.attr('action'), $form.serialize(), function (data) {
+                if (data.IsSuccess) {
+                    $('.vessel-schedule-save .success-message').html('<p>You haven been successfully saved new schedule</p>');
+                    setTimeout(function () {
+                        $('#loadingScheduleModal').modal('hide');
+                        var $tr = $('<tr/>');
+                        $tr.addClass('unsaved');
+                        $tr.append('<td style="display:none"><input type="checkbox" class="check-this" /><input type="hidden" class="id" name="id" value="' + data.Id + '" /></td>');
+                        $tr.append('<td><a href="/DerLoadingSchedule/Edit/' + data.Id + '" class="edit-schedule">' + data.VesselType + ' - ' + data.SalesType + ' - ' + data.Type + '</a></td>');
+                        $tr.append('<td>' + data.VesselName + ' ' + data.VesselCapacity + ' (' + data.VesselMeasuremant + ')</td>');
+                        $tr.append('<td>' + data.BuyerName + '</td>');
+                        $tr.append('<td>' + data.ETA + '</td>');
+                        $tr.append('<td>' + data.ETD + '</td>');
+                        $tr.append('<td>' + (data.Cargo == null ? "" : data.Cargo) + '</td>');
+                        if (data.RemarkDate == null) {
+                            $tr.append('<td><a href="/DerLoadingSchedule/Remarks/' + data.Id + '" class="see-remarks">See All</a></td>');
+                        } else {
+                            $tr.append('<td>' + data.RemarkDate + ';' + data.Remark + '  | <a href="/DerLoadingSchedule/Remarks/' + data.Id + '" class="see-remarks">See All</a></td>');
+                        }
+
+                        $tr.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
+                        $('.choosen-schedules').append($tr);
+                    }, 1000);
+
+                } else {
+                    if (data.Message.length > 0) {
+                        $valSummary = $('.vessel-schedule-save .validation-summary');
+                        $valSummary.html('');
+                        for (var i in data.Message) {
+                            $valSummary.append('<li>' + data.Message[i] + '</li>');
+                        }
+                    }
+                }
+            })
+        })
+        $('.close-vesel').click(function (e) {
+            $('#vessel-container').empty();
+            //$('#vessel-container').append('<div id="vessel_form"></div>');
+            //console.log('containernya vessel');
+        });
+        $('.close-buyer').click(function (e) {
+            $('#buyer-container').empty();
+            //$('#buyer-container').append('<div id="buyer_form"></div>');
+            //console.log('containernya buyer');
+        });
+    });
+</script>

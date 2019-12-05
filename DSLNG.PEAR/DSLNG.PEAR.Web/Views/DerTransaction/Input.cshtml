@@ -1,0 +1,1162 @@
+﻿<style>
+    body {
+        font-size: 12px !important;
+    }
+
+    .btn-master-rgw {
+        font-size: 13px !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    }
+
+    h1 {
+        font-size: 32px !important;
+    }
+
+    h2 {
+        font-size: 24px !important;
+    }
+
+    h3 {
+        font-size: 18px !important;
+    }
+
+    h4 {
+        font-size: 16px !important;
+    }
+
+    h5 {
+        font-size: 14px !important;
+    }
+
+    h6 {
+        font-size: 13px !important;
+    }
+
+    .nav-tabs > li > a {
+        color: #ffffff;
+    }
+
+    .nav-tabs > li:active > a {
+        color: #000000;
+    }
+
+    .form-control {
+        font-size: 12px;
+    }
+
+        .form-control dropdown {
+            font-size: 11px;
+        }
+
+    label {
+        font-size: 12px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .upper {
+        position: fixed;
+        top: 0px;
+        display: block;
+        /*background-image: url(/Content/img/bg_5.jpg);*/
+        background-color: rgb(0,109,165);
+        z-index: 1;
+        width: 100%;
+        padding-left: 15px;
+        border-bottom: solid 0.1em #CCCCCC;
+    }
+
+    .sprite {
+        background: url(/Content/img/bg_5.jpg) no-repeat -1700px -745px;
+        width: 100%;
+        height: 140px;
+    }
+
+    .lower {
+        margin-top: 110px;
+        border-bottom: solid 0.1em #CCCCCC;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    :focus {
+        border: 1px dashed red !important;
+    }
+
+    tr.der-value-now, .succeed {
+        border: 2px solid green !important;
+    }
+
+    .processing {
+        border: 2px solid yellow !important;
+    }
+
+    tr.der-value-prev, tr.der-value-empty {
+        border: 2px solid grey !important;
+    }
+
+    .mce-content-body p {
+        padding: 0 !important;
+        margin: 2px 0 !important;
+    }
+
+    #tinymce p {
+        padding: 0 !important;
+        margin: 2px 0 !important;
+    }
+
+    .der-yesterday {
+        width: 28px;
+        font-size: 18px;
+        display: inline-block;
+        margin-left: 10px;
+        color: #fff;
+    }
+
+    .der-tomorrow {
+        width: 28px;
+        font-size: 18px;
+        display: inline-block;
+        margin-left: 10px;
+        color: #fff;
+    }
+
+    .der-transaction-error,
+    tr.der-transaction-error {
+        border: 2px solid red !important;
+    }
+</style>
+@{
+    ViewBag.Title = "Der Input Form";
+}
+
+@helper DerDate(int addDays)
+{
+var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+if (Request.QueryString["date"] != null)
+{
+    date = Request.QueryString["date"];
+}
+var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+    @Url.Action("Input", "DerTransaction", new { date = d });
+}
+
+<section id="der-transaction" data-date="@DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy")">
+    <div class="row upper">
+        <div class="row">
+            <div class="title_page" style="border: none!important;">
+                <div class="row">
+                    <h4 class="page-header" style="margin-top: 0 !important; font-size:18px; font-family:Helvetica, sans-serif;">
+                        @ViewBag.Title
+                    </h4>
+                </div>
+            </div>
+            <div class="notification"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="form-inline">
+                    <div class="form-group form-list">
+                        @*<label>Activity Date : </label>*@
+                        <font color="#FFFFFF" style="font-weight:bold; font-size:14px;">Activity Date : </font>
+                        <a class="der-yesterday" href="@DerDate(-1)">
+                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        </a>
+                        <input id="currentDate" class="form-control datepicker" type="text">
+                        <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+
+                        <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        @*<hr />*@
+    </div>
+    <div class="lower">
+        <div class="row economic-indicators" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-content-url="@Url.Action("EconomicIndicator",new { date="__date__" })" data-toggle="collapse" data-target="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">Economic Indicator</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn btn-input-slide" role="button" data-content-url="@Url.Action("EconomicIndicator",new { date="__date__" })" data-toggle="collapse" data-target="#collapseEconomic" href="#collapseEconomic" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseEconomic" style="margin-top: 15px; margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row forecasted" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("ForcastedIndicator",new { date="__date__" })" data-target="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">Forecasted Market Indicator</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("ForcastedIndicator",new { date="__date__" })" data-target="#collapseForecasted" href="#collapseForecasted" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseForecasted" style="margin-top: 15px; margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row operation" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("OperationSection",new { date="__date__" })" data-target="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">Operation & Engineering</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("OperationSection",new { date="__date__" })" data-target="#collapseOperation" href="#collapseOperation" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseOperation" style="margin-top: 15px; margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row marine" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("MarineShipping",new { date="__date__" })" data-target="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">Marine, Shipping, Cargo Delivery</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MarineShipping",new { date="__date__" })" data-target="#collapseMarine" href="#collapseMarine" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseMarine" style="margin-top: 15px; margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row maintanance" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("MaintenanceSection",new { date="__date__" })" data-target="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">Maintenance</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("MaintenanceSection",new { date="__date__" })" data-target="#collapseMaintanance" href="#collapseMaintanance" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseMaintanance" style="margin-top: 15px; margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row qhsse" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("QhsseSection",new { date="__date__" })" data-target="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">QHSSE</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("QhsseSection",new { date="__date__" })" data-target="#collapseQhsse" href="#collapseQhsse" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseQhsse" style="margin-top: 15px; margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row others" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("EnablerSection",new { date="__date__" })" data-target="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">Enabler</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn  btn-input-slide" role="button" data-toggle="collapse" data-content-url="@Url.Action("EnablerSection",new { date="__date__" })" data-target="#collapseOthers" href="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseOthers" style="margin-top: 15px; margin-bottom: 15px;">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-12">
+                <a class="btn btn-trigger" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-target="#collapseAttachment">
+                    <h5 style="margin-left: -16px;" class="text-title-section">File Attachment</h5>
+                </a>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn  btn-input-slide" role="button" data-toggle="collapse" data-target="#collapseAttachment" href="#collapseAttachment" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseAttachment" style="margin-top: 15px; margin-bottom: 15px;">
+                    <div class="add-button-wrapper pull-left col-md-12">
+                        <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+                    </div>
+                    @if (TempData["IsSuccess"] != null && bool.Parse(TempData["IsSuccess"].ToString()) == false)
+                    {
+                        <p style="color:red">@TempData["Message"]</p>
+                    }
+                    <table id="activity-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Created By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div id="activity-upload-modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <form name="upload-activity-form" action="@Url.Action("UploadActivity", "DerTransaction")" enctype="multipart/form-data" method="post">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Upload File</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group form-list">
+                                            <label>File</label>
+                                            <input class="form-control" type="file" id="files" name="files" required multiple>
+                                            <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                                            <label id="invalidList"></label>
+                                        </div>
+                                        <div class="form-group form-list">
+                                            <label>Date</label>
+                                            <input name="date" class="form-control datepicker" />
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" id="btnUpload" />
+                                        <button type="button" class="btn btn-master-rgw btn-primary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-bottom: 30px;">
+        <a tabindex="284" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+        <label class="labletop">Batch :</label>
+        @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
+        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
+        <div id="processResult"></div>
+    </div>
+</section>
+
+<script type="text/javascript" src="~/Content/datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(document).on('click', '.submit-process', function (e) {
+        e.preventDefault();
+        var currentDate = $('.datepicker').val();
+        var batch_id = $('#Batch_Id').val();
+        var name = $('#Batch_Id option:selected').text();
+        var dto = {
+            Id: batch_id,
+            date: currentDate
+        };
+        $.ajax({
+            contentType: 'application/json',
+            data: JSON.stringify(dto),
+            type: 'POST',
+            url: '@Url.Action("ProcessDefault", "KpiTransformation")'
+        }).done(function (data) {
+            $('#processResult').html(data + ': <b>' + name + '</b>');
+        });
+    });
+    function callDerPreview() {
+        var currentDate = $('.datepicker').val();
+        if (currentDate == null || currentDate == undefined || currentDate == "") {
+            alert('Could not find selected date, please refresh your browser (F5)');
+            return;
+        }
+        var previewDate = new Date(currentDate);
+        previewDate.setDate(previewDate.getDate() + 1);
+        var month = (previewDate.getMonth()) + 1;
+        month = padLeft(month.toString(), 2);
+        var day = previewDate.getDate().toString();
+        day = padLeft(day, 2);
+        var year = padLeft(previewDate.getFullYear().toString(), 4);
+
+        var url = '@Url.Action("Preview","DER")?date=' + encodeURIComponent(month + '/' + day + '/' + year);  //  /DER/Preview?date=
+        window.open(url, '_blank');
+    }
+    function moveFieldTo(event, fieldId) {
+        var inputid = $(event.target).attr("id");
+        if (event.keyCode == 13) {
+            $(inputid).removeClass("der-text-yesterday");
+            document.getElementById(inputid).className = "form-control";
+            document.getElementById(fieldId).focus();
+            event.preventDefault();
+            return true;
+        }
+    }
+    function padLeft(nr, n, str) {
+        return Array(n - String(nr).length + 1).join(str || '0') + nr;
+    }
+</script>
+
+@section Scripts {
+    <script type="text/javascript">
+        function validate(filename) {
+            if (filename.match(/[^a-zA-Z0-9\.\s\-\_\(\)\[\]\+]/g)) {
+                var msg = "You have a not allowed character on " + filename;
+                alert(msg);
+                
+                $("#invalidList").append(msg + "<br/>");
+                return false;
+            } else
+                return true;
+        }
+
+        function getFileExtension(filename) {
+            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+        }
+
+        function validateExtension(filename) {
+            var ext = getFileExtension(filename);
+            if ($.inArray(ext.toLowerCase(), ['jpg', 'jpeg', 'gif', 'png', 'pdf', 'msg', 'txt', 'csv', 'xls', 'xlsx', 'xlt', 'doc', 'docx', 'ppt', 'pptx', 'odt', 'rar', 'zip', '7z']) === -1) {
+                var msg = "Invalid file extension for "+ ext + " in " + filename;
+                alert(msg);
+                $("#invalidList").append(msg + "<br/>");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        $("#invalidList").empty();
+        $('#activity-upload-modal').on('show.bs.modal', function (e) {
+            $('#btnUpload').attr('disabled', true);
+        });
+        $('INPUT[type="file"]').change(function (e) {
+            $("#invalidList").empty();
+            var files = e.target.files;
+            var success = false;
+            var err = 0;
+            for (var i = 0; i < files.length; ++i) {
+                if (!validate(files[i].name)) { ++err; };
+                if (!validateExtension(files[i].name)) { ++err;};
+            }
+
+            if (err > 0) {
+                $('#btnUpload').attr('disabled', true);
+            } else {
+                $('#btnUpload').attr('disabled', false);
+            }
+        });
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) == variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return null;
+        }
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        var reloadView = function () {
+            window.document.location = updateQueryStringParameter(window.location.href, "date", encodeURIComponent($('.datepicker').val()));
+        };
+
+        $(document).ready(function () {
+            var date = getQueryVariable('date');
+            if (date == null) {
+                $('.datepicker').val($('#der-transaction').data('date'));
+            } else {
+                $('.datepicker').val(decodeURIComponent(date));
+            }
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            }).on('dp.change', function (e) {
+                $(".datepicker").blur();
+                reloadView();
+            });
+            var currentDate = $('.datepicker').val();
+
+            $('.collapse').on('hide.bs.collapse', function () {
+                var tombol = $(this).attr("id");
+                tombol = $("a[href='#" + tombol + "']").text("+");
+            });
+
+            $('.collapse').on('show.bs.collapse', function () {
+                var tombol = $(this).attr("id");
+                tombol = $("a[href='#" + tombol + "']").text("-");
+            });
+
+            var openNextTab = function ($latInput, nextIndex) {
+                var nextIndexs = [24, 36, 172, 179, 219, 268, 284];
+                if (nextIndexs.indexOf(nextIndex) > -1) {
+                    var $collapse = $latInput.closest('.collapse');
+                    var $row = $collapse.closest('.row');
+                    var $nextRow = $row.next();
+                    var $nextWrapper = $nextRow.find('.collapse');
+                    $nextRow.find('.btn-input-slide').click();
+                    window.theInterval = setInterval(function () {
+                        if ($nextRow.find('.collapse').children().length > 0) {
+                            var $next = $('[tabindex=' + nextIndex + ']');
+                            if ($next.is("textarea") && $next.css('display') == 'none') {
+                                tinyMCE.get($next.attr('id')).focus()
+                            } else {
+                                $next.focus();
+                            }
+                            clearInterval(window.theInterval);
+                        }
+                    }, 100);
+                    setTimeout(function () { clearInterval(window.theInterval); }, 10000);
+                }
+            };
+
+            $('.btn-trigger').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var target = $this.data('target');
+                expands(target, $this);
+            });
+
+            $('.btn-input-slide').click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var target = $this.data('target');
+                expands(target, $this);
+            });
+
+            var updateCallback = function (resp, f, $obj, type) {
+                if ($obj.hasClass('der-transaction-error')) {
+                    $obj.removeClass('der-transaction-error');
+                }
+                if (resp.IsSuccess || typeof resp == 'string' || resp == null) {
+                    f();
+                } else {
+                    switch (type) {
+                        case 'input-kpi':
+                        case 'select-kpi':
+                        case 'input-highlight':
+                        case 'select-highlight':
+                            if ($obj.hasClass('in-progress')) {
+                                $obj.removeClass('in-progress');
+                            }
+                            break;
+                        default:
+                            if ($obj.hasClass('processing')) {
+                                $obj.removeClass('processing');
+                            }
+                            break;
+                    }
+                    $obj.addClass('der-transaction-error');
+                    alert("Update failed. Error message : " + resp.Message);
+                }
+            };
+
+            function expands(target, $this) {
+                if (!$(target).children().length) {
+                    var contentUrl = $this.data('content-url');
+                    contentUrl = contentUrl.replace('__date__', encodeURIComponent(currentDate));
+                    $.get(contentUrl, function (data) {
+                        $(target).on('click', 'select', function () {
+                            if ($(this).attr('data-clicks') == 1) {
+                                // Trigger here your function:
+                                $(this).trigger("altChange");
+                                $(this).attr('data-clicks', 0);
+                            } else {
+                                $(this).attr('data-clicks', 1);
+                            }
+                        });
+                        $(target).on('focusout', 'select', function () {
+                            $(this).attr('data-clicks', 0);
+                        });
+                        $(target).html(data);
+                        $(target).find('input.der-kpi').keyup(function (e) {
+                            if (e.keyCode == 13) {
+                                $(this).trigger("enterKey");
+                            }
+                            else {
+                                return;
+                            }
+                        });
+                        $(target).find('input.der-kpi').keypress(function (e) {
+                            if ($(this).attr('data-value-type') == 'value') {
+                                var maxLen = $(this).attr('maxLength')
+                                if (maxLen == undefined) {
+                                    $(this).attr('maxLength', 10);
+                                }
+                                //$(this).attr('maxlength', 10);
+                                if (e.which !== 13 && e.which !== 9) {
+                                    if ((e.which > 8 && e.which < 44) || e.which > 57) {
+                                        e.preventDefault();
+                                    }
+                                }
+                            }
+                        });
+                        $(target).find('input.der-kpi').blur(function (e) {
+                            if ($(this).attr('data-value-type') == 'value') {
+                                var toConvert = eval($(this).val().replace(/,/g, ''));
+                                if (!isNaN(toConvert)) {
+                                    $(this).val(toConvert.toLocaleString('en-EN', { maximumSignificantDigits: 21 }));
+                                }
+                            }
+                        });
+                        $(target).find('input.der-kpi').focus(function (e) {
+                            $(this).select();
+                        });
+                        $(target).find('input.der-kpi').bind('enterKey', function (e) {
+                            var $this = $(this);
+                            var kpiId = $this.data('kpi-id');
+                            var type = $this.data('type');
+                            var tabindex = $this.attr('tabindex');
+                            var nextTabindex = parseInt(tabindex) + 1;
+
+                            //special cases;
+                            if (nextTabindex == 137) {
+                                nextTabindex += 1;
+                            }
+
+                            var id = $this.attr('data-id');
+                            var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
+                            var numeric = false;
+                            if ($this.attr('data-value-type') == 'value') {
+                                numeric = !isNaN(parseFloat(value));
+                            }
+                            if (numeric || $this.attr('data-value-type') == 'remark' || $this.val() == '') {
+
+                                if (!numeric) {
+                                    value = $this.val();
+                                }
+                                $(this).val(value);
+                                var valueType = $this.data('value-type');
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+                                    updateCallback(resp, function () {
+                                        $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0 || resp.Id == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    }, $this, 'input-kpi');
+                                });
+                            }
+                            openNextTab($this, nextTabindex);
+                            var $next = $('[tabindex=' + nextTabindex + ']');
+                            if ($next.is("textarea") && $next.css('display') == 'none') {
+                                tinyMCE.get($next.attr('id')).focus()
+                            } else {
+                                $next.focus();
+                            }
+                        })
+                        $(target).find('textarea.allow-html').each(function (i, val) {
+                            var $this = $(val);
+                            var textarea = $this.closest('textarea');
+                            var row = textarea.closest('tr');
+                            var currentClass = textarea.attr('class').split(' ')[0];
+                            row.addClass(currentClass);
+                            tinyMCE.init({
+                                selector: '#' + $this.attr('id'),
+                                menubar: false,
+                                theme_advanced_path: false,
+                                plugins: [
+                                    "advlist autolink lists charmap print preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table contextmenu paste"
+                                ],
+                                style_formats: [
+                                    { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                                    { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
+                                ],
+                                force_br_newlines: true,
+                                force_p_newlines: false,
+                                //forced_root_block: '',
+                                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+                                setup: function (editor) {
+                                    editor.on('keydown', function (e) {
+                                        var key = e.keyCode || e.which;
+
+                                        // on tab key
+                                        if (key == 9) {
+                                            e.preventDefault();
+                                            return;
+                                        }
+
+                                    }).on('keyup', function (e) {
+                                        var key = e.keyCode || e.which;
+                                        var $textarea = $('#' + editor.id);
+                                        var nextTab = parseInt($textarea.attr('tabindex')) + 1;
+                                        if (key == 9) {
+                                            var highlightTypeId = $textarea.data('highlight-type-id');
+                                            var id = $textarea.attr('data-id');
+                                            row.addClass('processing');
+                                            var value = editor.getContent();
+                                            if ((highlightTypeId == 53 || highlightTypeId == 21) && value.length > 210) {
+                                                alert('your content exceed max 200 char');
+                                                return false;
+                                            }
+                                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                                updateCallback(resp, function () {
+                                                    openNextTab($textarea, nextTab);
+                                                    var $next = $('[tabindex=' + nextTab + ']');
+                                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                                        tinyMCE.get($next.attr('id')).focus()
+                                                    } else {
+                                                        $next.focus();
+                                                    }
+                                                    if (parseInt($textarea.attr('data-id')) == 0) {
+                                                        $textarea.attr('data-id', resp.Id);
+
+                                                    }
+                                                    if (resp == null || typeof resp == 'string') {
+                                                        if (row.hasClass('processing')) {
+                                                            row.removeClass('processing');
+                                                        }
+                                                        row.removeClass(currentClass);
+                                                        row.addClass('succeed');
+                                                        return;
+                                                    }
+                                                    if (resp.Id > 0) {
+                                                        if (row.hasClass('processing')) {
+                                                            row.removeClass('processing');
+                                                        }
+                                                        row.removeClass(currentClass);
+                                                        row.addClass('succeed');
+                                                    }
+                                                }, row, 'textarea-highlight');
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        })
+                        $(target).on('altChange', 'select.der-highlight', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var highlightTypeId = $this.data('highlight-type-id');
+                            var id = $this.attr('data-id');
+                            var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTab);
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                    $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                }, $this, 'select-highlight');
+                            });
+                        });
+                        $('.datepicker', target).datetimepicker({
+                            format: "DD MMM YYYY",
+                            focusOnShow: false
+                        });
+                        $(target).on('keyup', 'input.der-highlight-input', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatehighlight", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily" }, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    }, $this, 'input-highlight');
+                                });
+                            }
+                        });
+                        $(target).on('altChange', 'select.der-highlight-infragsm', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var highlightTypeId = $this.data('highlight-type-id');
+                            var id = $this.attr('data-id');
+                            var value = $this.val();
+                            var property = $this.data('property');
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updateinfragsm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTab);
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                    $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                }, $this, 'select-highlight');
+                            });
+                        });
+                        $(target).on('altChange', 'select.der-highlight-wave', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var id = $this.attr('data-id');
+                            var value = $this.val();
+                            var property = $this.data('property');
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property };
+                            if (property == 'wind-direction') {
+                                data.ValueId = value;
+                            } else {
+                                data.Tide = value;
+                            }
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updatewave", data, function (resp) {
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTab);
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                    $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                }, $this, 'select-highlight');
+                            });
+                        });
+                        $(target).on('altChange', 'select.der-highlight-weather', function (e) {
+                            var $this = $(this);
+                            var nextTab = parseInt($this.attr('tabindex')) + 1;
+                            var id = $this.attr('data-id');
+                            var value = $this.val();
+                            var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", ValueId: value };
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updateweather", data, function (resp) {
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTab);
+                                    var $next = $('[tabindex=' + nextTab + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+                                    $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                }, $this, 'select-highlight');
+                            });
+                        });
+                        $(target).on('keyup', 'input.der-highlight-wave', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                var data = { DateInDisplay: currentDate, id: id, PeriodeType: "Daily", property: property, Speed: value };
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatewave", data, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    }, $this, 'input-highlight');
+                                });
+                            }
+                        });
+                        $(target).on('keyup', 'input.der-highlight-brenfut', function (e) {
+                            if (e.keyCode == 13) {
+                                var $this = $(this);
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                var valueType = $this.data('type');
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updatebrenfut", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property, valueType: valueType }, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    }, $this, 'input-highlight');
+                                });
+                            }
+                        });
+                        $(target).on('altChange', 'select.der-kpi', function (e) {
+                            var $this = $(this);
+                            var kpiId = $this.data('kpi-id');
+                            var type = $this.data('type');
+                            var tabindex = $this.attr('tabindex');
+                            var nextTabindex = parseInt(tabindex) + 1;
+                            var id = $this.attr('data-id');
+                            var value = $this.val();
+                            var valueType = $this.data('value-type');
+                            $this.addClass('in-progress');
+                            $.post("/dertransaction/updatekpi", { kpiId: kpiId, type: type, date: currentDate, id: id, value: value, valueType: valueType }, function (resp) {
+                                updateCallback(resp, function () {
+                                    openNextTab($this, nextTabindex);
+                                    var $next = $('[tabindex=' + nextTabindex + ']');
+                                    if ($next.is("textarea") && $next.css('display') == 'none') {
+                                        tinyMCE.get($next.attr('id')).focus()
+                                    } else {
+                                        $next.focus();
+                                    }
+
+                                    $this.removeClass('in-progress');
+                                    if (resp == null || typeof resp == 'string') {
+                                        return;
+                                    }
+
+                                    if ($this.hasClass('der-value-prev')) {
+                                        $this.removeClass('der-value-prev');
+                                    }
+                                    if ($this.hasClass('der-value-empty')) {
+                                        $this.removeClass('der-value-empty');
+                                    }
+                                    $this.addClass('der-value-now');
+                                    if (parseInt($this.attr('data-id')) == 0) {
+                                        $this.attr('data-id', resp.Id);
+                                    }
+                                }, $this, 'select-kpi');
+                            })
+                        });
+                        $(target).on('keydown', 'input.der-highlight-weekly-alarm, textarea.der-highlight-weekly-alarm', function (e) {
+                            var $this = $(this);
+                            if (($this.is('input') && e.keyCode == 13) || ($this.is('textarea') && (!e.shiftKey && e.keyCode == 9))) {
+                                var nextTab = parseInt($this.attr('tabindex')) + 1;
+                                var highlightTypeId = $this.data('highlight-type-id');
+                                var id = $this.attr('data-id');
+                                var value = $this.val();
+                                var property = $this.data('property');
+                                $this.addClass('in-progress');
+                                $.post("/dertransaction/updateweeklyalarm", { TypeId: highlightTypeId, DateInDisplay: currentDate, id: id, message: value, PeriodeType: "Daily", property: property }, function (resp) {
+                                    updateCallback(resp, function () {
+                                        openNextTab($this, nextTab);
+                                        var $next = $('[tabindex=' + nextTab + ']');
+                                        if ($next.is("textarea") && $next.css('display') == 'none') {
+                                            tinyMCE.get($next.attr('id')).focus()
+                                        } else {
+                                            $next.focus();
+                                        }
+                                        $this.removeClass('in-progress');
+                                        if (resp == null || typeof resp == 'string') {
+                                            return;
+                                        }
+
+                                        if ($this.hasClass('der-value-prev')) {
+                                            $this.removeClass('der-value-prev');
+                                        }
+                                        if ($this.hasClass('der-value-empty')) {
+                                            $this.removeClass('der-value-empty');
+                                        }
+                                        $this.addClass('der-value-now');
+                                        if (parseInt($this.attr('data-id')) == 0) {
+                                            $this.attr('data-id', resp.Id);
+                                        }
+                                    }, $this, 'input-highlight');
+                                });
+                            }
+                        });
+                    })
+                }
+            }
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#activity-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                //"columnDefs": [
+                //    { "visible": false, "targets": 0 }
+                //],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("DerInputFileGrid", "DerTransaction", new { @Date = "_date_"})'.replace('_date_', $('#currentDate').val()),
+                search: true,
+
+                "order": [[0, "asc"]],
+                "aoColumns": [
+                    {
+                        "mDataProp": "FileName", "name": "FileName", "className": "text-align-left",
+                        "mRender": function (data, type, row) {
+                            var files = row.FileName.split(';');
+                            if (files.length) {
+                                return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">' + row.Title +'</a>'
+                            }
+                            return '';
+                        }
+                    },
+                    {
+                        "mDataProp": "CreatedBy", "name": "CreatedBy", "className": "text-align-left"
+                    },
+
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            return deleteLink;
+                        }
+                    }
+                ],
+
+            });
+
+            $('#activity-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("DeleteActivity", "DerTransaction")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+            @if (TempData["ExpandedFileAttachment"] != null && TempData["ExpandedFileAttachment"].ToString().ToLowerInvariant() == "true")
+            {
+                @:$('#collapseAttachment').collapse('show');
+            }
+            
+
+        });
+    </script>
+}

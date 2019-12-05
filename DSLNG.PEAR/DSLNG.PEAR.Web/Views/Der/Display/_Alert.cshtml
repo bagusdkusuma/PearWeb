@@ -1,0 +1,57 @@
+﻿@using DevExpress.XtraScheduler.Services
+@model DSLNG.PEAR.Services.Responses.Highlight.GetHighlightResponse
+<style>
+    .alert-condition tbody tr td:first-letter {
+        text-transform: uppercase;
+    }
+</style>
+<table class="table alert-condition text-center">
+    <thead>
+        <tr>
+            <td>
+                Alert condition
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="the-alert @ClassAlert()">
+                @SplitAlert(Model.Message)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@helper SplitAlert(string message)
+{
+if (!string.IsNullOrEmpty(Model.Message))
+{
+        <text>@Model.Message.Trim().Replace(".jpg", "")</text>
+
+}
+}
+
+
+@helper ClassAlert()
+{
+    if (!string.IsNullOrEmpty(Model.Message))
+    {
+        if (Model.Message.Trim().ToUpperInvariant().Contains("LOW"))
+        {
+            <text>low</text>
+        }
+        else if (Model.Message.Trim().ToUpperInvariant().Contains("ELEVATED"))
+        {
+            <text>elevated</text>
+        }
+        else if (Model.Message.Trim().ToUpperInvariant().Contains("HIGH"))
+        {
+            <text>high</text>
+        }
+        if (Model.Message.Trim().ToUpperInvariant().Contains("SEVERE"))
+        {
+            <text>severe</text>
+        }
+    }
+}
+

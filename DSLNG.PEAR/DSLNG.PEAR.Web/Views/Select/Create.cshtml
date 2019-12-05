@@ -1,0 +1,59 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.Select.CreateSelectViewModel
+@{
+    ViewBag.Title = "Create New Select";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_MessageResponse")
+<div class="row select-form">
+    <div class="col-md-5">
+        <form action="@Url.Action("Create")" method="POST" enctype='multipart/form-data'>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ParentId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.ParentId, Model.Parents, new { @class = "form-control", data_url=Url.Action("options") })
+                @Html.ValidationMessageFor(model => model.ParentId)
+            </div>
+            <div class="form-group parent-options" style="display:none">
+                @Html.LabelFor(model => model.ParentOptionId, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.ParentOptionId, Model.ParentOptions, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ParentOptionId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsActive, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        @*    <div class="form-group">
+                @Html.LabelFor(model => model.IsDashBoard, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsDashBoard, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsDashBoard)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsDer, new { @class = "control-label" })
+                @Html.EditorFor(model => model.IsDer, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IsDer)
+            </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Type, new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.Type, Model.Types, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type)
+            </div>
+            @Html.Partial("_OptionForm", Model.Options)
+            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="@Url.Action("Index")" class="btn btn-default">Cancel</a>
+
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+

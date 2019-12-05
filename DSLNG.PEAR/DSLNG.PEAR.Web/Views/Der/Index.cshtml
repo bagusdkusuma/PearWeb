@@ -1,0 +1,451 @@
+﻿@model  DSLNG.PEAR.Web.ViewModels.Der.DerIndexViewModel
+@{
+    ViewBag.Title = "Daily Executive Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dataTables_filter {
+        display: none;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-1:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: #808080;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-2:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: #F0F0F0;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-3:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: #FF0000;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-4:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: orange;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-5:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: green;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        width: 161px !important;
+    }
+
+    .dd-glyphicon {
+        vertical-align: top;
+        top: -4px;
+        left: 0px;
+    }
+</style>
+
+<h2>DER (Daily Executive Report)</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper pull-left">
+    @if (Session["DER"] != null)
+    {
+        var privilege = Session["DER"] as List<string>;
+        if (privilege.Contains("AllowCreate"))
+        {
+            @Html.ActionLink("Generate", "Preview", null, new { @class = "btn-master-rgw btn btn-primary" })
+        }
+        if (privilege.Contains("AllowUpload"))
+        {
+            <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#der-upload-modal">Upload</a>
+        }
+    }
+</div>
+<div class="pull-right">
+    <form class="form-inline">
+        <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">Traffic Light :</label>
+            <select class="selectpicker" id="traffic-light" style="width:50%">
+                <option value=""> Select All</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")> -- Normal Shut Down</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-3" value="3" @(Model.TrafficLight == "3" ? "selected" : "")> -- Alert</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-4" value="4" @(Model.TrafficLight == "4" ? "selected" : "")> -- Need Attention</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-5" value="5" @(Model.TrafficLight == "5" ? "selected" : "")> -- Normal Ops</option>
+            </select>
+
+            @*@Html.DropDownListFor(x => x.TrafficLight, Model.TrafficLights, new { @class = "form-control", id = "traffic-light" })*@
+        </div>
+        <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">Year :</label>
+            @Html.DropDownListFor(x => x.Year, Model.YearList, new { @class = "selectpicker", id = "year" })
+        </div>
+        <div class="form-group" style="margin-top: 5px;">
+            <label class="labletop">Month :</label>
+            @Html.DropDownListFor(x => x.Month, Model.MonthList, new { @class = "selectpicker", id = "month" })
+
+        </div>
+    </form>
+</div>
+<table id="der-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" style="width: 100%">
+    <thead>
+        <tr>
+            <th style="width:70px">Activity Date</th>
+            <th style="border:none;border-left:1px solid #fff;padding: 0">&nbsp;</th>
+            <th style="border-left:none">Daily Highlight</th>
+            <th>Marine Cargo Delivery</th>
+            <th>QHSE</th>
+            <th>Security</th>
+            <th>File Attachment</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="der-upload-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form name="upload-der-form" action="@Url.Action("Upload", "Der")" enctype="multipart/form-data" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload DER File</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group form-list">
+                        <label>File</label>
+                        <input class="form-control" type="file" name="derFile" required>
+                        <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group form-list">
+                        <label>Date</label>
+                        <input name="date" class="form-control datepicker" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Upload" id="btnUpload" />
+                    <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="der-versions-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form name="upload-der-form" action="@Url.Action("Upload", "Der")" enctype="multipart/form-data" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">DER Versions</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="derModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body" style="color:#fff">
+
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @{
+                bool AllowDelete = false;
+                var privileges = Session["DER"] as List<string>;
+                if (privileges.Contains("AllowDelete"))
+                {
+                    AllowDelete = true;
+                }
+            }
+
+            function getFileExtension(filename) {
+                return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+            }
+
+            function validate(filename) {
+                if (filename.match(/[^a-zA-Z0-9\.\s\-\_\(\)\+]/g)) {
+                    alert("You have a not allowed character on " + filename);
+                    return false;
+                } else
+                    return true;
+            }
+            $('#der-upload-modal').on('show.bs.modal', function (e) {
+                $('#btnUpload').attr('disabled', true);
+            });
+            $('INPUT[type="file"]').change(function (e) {
+                var ext = getFileExtension(this.value);
+                var file = e.target.files[0];
+
+                if (ext.toLowerCase() != 'pdf') {
+                    $('#btnUpload').attr('disabled', true);
+                    alert('This is not an allowed file type.');
+                    this.value = '';
+                }
+
+                if (validate(file.name) && ext == 'pdf') {
+                    $('#btnUpload').attr('disabled', false);
+                } else {
+                    $('#btnUpload').attr('disabled', true);
+                }
+                
+                //if (ext == 'pdf' && validate(file.name)) {
+                //    $('#btnUpload').attr('disabled', false);
+                //} else {
+                //    $('#btnUpload').attr('disabled', true);
+                //    alert('This is not an allowed file type.');
+                //    this.value = '';
+                //}
+            });
+            $('#derModal').on('show.bs.modal', function (e) {
+                var date = $(e.relatedTarget).data('date');
+                var title = $(e.relatedTarget).data('title');
+                var text = _textDictionary[title + '_' + date];
+
+                $('#derModal h4').text(title + ' - ' + date);
+                $('#derModal .modal-body').html(text);
+            })
+            AllowDelete = '@{ @AllowDelete}';
+            var _textDictionary = [];
+            function shortenText(data, title, date) {
+                _textDictionary[title + '_' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY')] = data;
+                var textDisplay = data.replace('<p>', '').replace('</p>', '').replace('"', '').replace('&nbsp;', ' ');
+                var length = 200;
+                if (data.length > length) {
+                    textDisplay = data.replace('&nbsp;', '').substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
+                    textDisplay += ' | <a class="read-more" href="#" data-toggle="modal" data-target="#derModal" data-title="' + title + '" data-date="' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '">Read More</button>';
+                }
+                return textDisplay;
+            }
+            var table = $('#der-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "Der")',
+                "order": [[0, "desc"]],
+                "oSearch": {
+                    "sSearch": $('#month').val() + '-' + $('#year').val() + '-' + $('#traffic-light').val()
+                },
+                "aoColumns": [
+                    {
+                        "mDataProp": "Date", "name": "Date", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            var plantMode = '';
+                            console.log(row['PlantMode']);
+                            if (row['PlantMode'].toLowerCase().indexOf('holding') > -1) {
+                                plantMode = '<span style="display:block;color:green">Holding</span>';
+                            } else if (row['PlantMode'].toLowerCase().indexOf('loading') > -1) {
+                                plantMode = '<span style="display:block;color:blue">Loading</span>';
+                            } else if (row['PlantMode'].toLowerCase().indexOf('shutdown') > -1) {
+                                plantMode = '<span style="display:block;color:red">Shut Down</span>';
+                            }
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '</a>'
+                                + plantMode;
+                        }
+
+                    },
+                    {
+                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left", "orderable": false, width: 1, "padding": "0", fixed: true,
+                        "mRender": function (data, type, row, pos) {
+                            var str = '';
+                            if (parseInt(data) < 2) {
+                                str = '<span class="indicator"><i class="fa fa-circle"  style="color:#808080" ></i></span>';
+                            } else if (parseInt(data) == 2) {
+                                str = '<span class="indicator"><i class="fa fa-circle" style="color:#F0F0F0"></i></span>';
+                            } else if (parseInt(data) == 3) {
+                                str = '<span class="indicator"><i class="fa fa-circle" style="color:#FF0000"></i></span>';
+                            } else if (parseInt(data) == 4) {
+                                str = '<span class="indicator orange"><i class="fa fa-circle" style="color:orange"></i></span>';
+                            } else if (parseInt(data) > 4) {
+                                str = '<span class="indicator green"><i class="fa fa-circle" style="color:green"></i></span>';
+                            }
+                            return str;// + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"], "Overall Performance", row['Date']) + "</span>";
+                        }
+                    },
+                    {
+                        "mDataProp": "OverallPerformance", "name": "OverallPerformance", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "OverallPerformance", row['Date']);
+                        }
+                    },
+                    {
+                        "mDataProp": "MarineCargoDelivery", "name": "MarineCargoDelivery", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "Marine Cargo Delivery", row['Date']);
+                        }
+                    },
+                    {
+                        "mDataProp": "Qhse", "name": "Qhse", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "QHSE", row['Date']);
+                        }
+                    },
+                    {
+                        "mDataProp": "Security", "name": "Security", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "Security", row['Date']);
+                        }
+                    },
+
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              var files = row.Filename.split(';');
+                              if (files.length) {
+                                  return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View</a> | ' +
+                                      '<a download href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                              }
+                              return '';
+
+                          }
+                      }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $(document).on('click', '.delete', function () {
+                var filename = $(this).attr('data-filename');
+                if (confirm('Are you sure want to delete this item?' + filename)) {
+                    var url = '@Url.Action("Delete", "Der")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="filename" value="' + filename + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            });
+
+            $('.year-filter').datetimepicker({
+                format: "MM",
+                focusOnShow: false
+            });
+
+
+            //$('#upload-der').click(function () {
+            //    alert('asasas');
+            //});
+            $(document).on('click', '#der-versions', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var row = $this.data('pos');
+                var rows = table.rows().data();
+                var rowData = rows[row];
+                var $table = $('<table />');
+                $table.addClass('table table-bordered der-versions-table');
+                $table.attr('style', 'color:#fff !important');
+                $table.append('<thead><tr><th>Version</th><th>File Attachment</th><th>Action</th></th></thead>');
+                $table.append('<tbody></tbody>');
+                var files = rowData.Filename.split(';');
+                var $tableBody = $table.find('tbody');
+                for (var i in files) {
+                    var version = parseInt(files[i].split('_')[1].replace('.pdf', ''));
+                    var $tr = $('<tr />');
+                    $tr.append('<td>' + version + '</td>');
+                    var view = '<a href="' + files[i].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View File Attachment</a> |' +
+                                    '<a download href="' + files[i].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                    $tr.append('<td>' + view + '</td>');
+                    var arrFilenames = files[i].split('/');
+                    var filename = arrFilenames[arrFilenames.length - 1];
+                    if (AllowDelete == 'True' || AllowDelete == 'true' || AllowDelete == true) {
+                        $tr.append('<td><a href="#" class="delete" data-filename="' + filename + '">Delete</a></td>');
+                    }
+                    $tableBody.append($tr);
+                }
+                $('#der-versions-modal .modal-body').html($table);
+                $('#der-versions-modal .modal-title').html("DER " + moment(new Date(rowData.Date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + " Versions");
+            });
+
+            function getQueryVariable(variable) {
+                var query = window.location.search.substring(1);
+                var vars = query.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    if (decodeURIComponent(pair[0]) == variable) {
+                        return decodeURIComponent(pair[1]);
+                    }
+                }
+                return null;
+            }
+            function updateQueryStringParameter(uri, key, value) {
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    return uri.replace(re, '$1' + key + "=" + value + '$2');
+                }
+                else {
+                    return uri + separator + key + "=" + value;
+                }
+            }
+
+            var reloadView = function () {
+                var location1 = updateQueryStringParameter(window.location.href, "year", encodeURIComponent($('#year').val()));
+                var location2 = updateQueryStringParameter(location1, "month", encodeURIComponent($('#month').val()));
+                window.document.location = updateQueryStringParameter(location2, "traffic-light", encodeURIComponent($('#traffic-light').val()));
+            };
+
+            $('#month,#year,#traffic-light').change(function (e) {
+                e.preventDefault();
+                reloadView();
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-select.min.css")">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
+    <style>
+        .glyphicon-one-fine-red-dot:before {
+            content: "\25cf";
+            font-size: 10px;
+            color: red;
+        }
+
+        .glyphicon-one-fine-full-dot:before {
+            content: "\25cf";
+            font-size: 3em;
+        }
+
+        .glyphicon-one-fine-empty-dot:before {
+            content: "\25cb";
+            font-size: 3em;
+        }
+    </style>
+}

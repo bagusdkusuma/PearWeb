@@ -1,0 +1,349 @@
+﻿@{
+    Layout = null;
+}
+@model DSLNG.PEAR.Web.ViewModels.DerTransaction.DerValuesViewModel
+    <style>
+        .choosen-schedules.prev tr:not(.unsaved) td,
+                .choosen-schedules.prev tr:not(.unsaved) td a{
+            color: #ccc !important;
+        }
+        .choosen-schedules.now tr:not(.unsaved) td,
+                .choosen-schedules.now tr:not(.unsaved) td a{
+            color: limegreen !important;
+        }
+    </style>
+<div class="col-md-12 marine-shipping-message">
+    <div><ul class="validation-summary" style="color:red"></ul></div>
+    <div><ul class="success-message" style="color:green"></ul></div>
+</div>
+<div class="col-md-12">
+    <p>
+        <button class="btn btn-master-rgw btn-primary choose-loading-schedule">Add From Existing</button>
+        <button class="btn btn-master-rgw btn-primary add-new-schedule">Add New NLS</button>
+        @*<button class="btn btn-default add-vessel">Add Vessel</button>
+        <button class="btn btn-default add-buyer">Add Buyer</button>*@
+        <button class="btn btn-master-rgw btn-primary pull-right save-schedules" style="background-color:yellow!important; color:inherit;">Save</button>
+    </p>
+    <div style="margin-top:20px" class="panel panel-default der-panel">
+        <table class="der table-bordered choosen-schedules @Model.DerLoadingSchedule.ExistValueTime">
+            <tr>
+                <th style="width:15px;display:none"></th>
+                <th style="width:150px">Next Loading Schedule</th>
+                <th style="width:150px">Vessel (Capacity)</th>
+                <th style="width:150px">Customer</th>
+                <th style="width:150px">ETA</th>
+                <th style="width:150px">ETD</th>
+                <th style="width:20px">Cargo#</th>
+                <th>Remarks</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var nls in Model.DerLoadingSchedule.VesselSchedules)
+            {
+                <tr>
+                    <td style="display:none">
+                        <input type="checkbox"  class="check-this"/><input type="hidden" name="id" class="id" value="@nls.id" />
+                    </td>
+                    <td>
+                        <a href="/DerLoadingSchedule/Edit/@nls.id" class="edit-schedule">@nls.VesselType - @nls.SalesType - @nls.Type</a>
+                    </td>
+                    <td>@nls.Vessel (@nls.Capacity @nls.Measurement)</td>
+                    <td>@nls.Buyer</td>
+                    @if (nls.ETA.HasValue)
+                    {
+                        <td>@nls.ETA.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>&nbsp;</td>
+                    }
+
+                    @if (nls.ETD.HasValue)
+                    {
+                        <td>@nls.ETD.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td>&nbsp;</td>
+                    }
+                    <td>@nls.Cargo</td>
+                    @if (nls.RemarkDate.HasValue)
+                    {
+                        <td>@nls.RemarkDate.Value.ToString("dd-MM-yyyy");@nls.Remark | @Html.ActionLink("See All", "Remarks", "DerLoadingSchedule", new { id = nls.id }, new { @class = "see-remarks" })</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("See All", "Remarks", "DerLoadingSchedule", new { id = nls.id }, new { @class = "see-remarks" })</td>
+                    }
+                    <td><button class="btn btn-master-rgw btn-primary remove-schedule fa fa-trash-o"> remove</button></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="col-md-12" style="margin-top: 30px;">
+    <div class="col-md-3">
+        <label class="control-label subtitle">Loading Duration  (hh.mm) :</label>
+        <!--185-->
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">Standard (hours)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 172, "days", "34","yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Last (hours)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 375, 173, "days", "prev" )
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">AVG YTD (hours)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 376, 174, "days", "prev")
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-3">
+        <label class="control-label subtitle">Ttl Terminal Time  (hh.mm) :</label>
+        <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
+            <tr>
+                <td><label class="control-label">Standard (hours)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 175, "days", "34", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">Last (hours)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 377, 176, "days", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">AVG YTD (hours)</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 378, 177, "days", "prev")
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table border="0">
+            <tr>
+                <td><label class="control-label subtitle">Marine, Shipping, Cargo Delivery Highlight:</label></td>
+            </tr>
+            <tr>
+                <td>
+                    <!--191-->
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 52, 178,"prev")
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="loadingScheduleModal" tabindex="-1" role="dialog" aria-labelledby="loadingScheduleModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="modalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                Loading ...
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    $(document).ready(function (e) {
+        $('#loadingScheduleModal').on('hidden.bs.modal', function () {
+            $('#loadingScheduleModal').find('.modal-title').html('');
+            $('#loadingScheduleModal').find('.modal-body').html('');
+        })
+        $(document).on('click', '.choose-loading-schedule', function (e) {
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(1200);
+            $modal.find('.modal-title').html('Choose Schedules');
+            $('#loadingScheduleModal').modal('show');
+            var choosenIds = [];
+            $('.choosen-schedules tr:not(:first-child)').each(function (i, val) {
+                var $row = $(val);
+                choosenIds.push(parseInt($row.find('.id').val()));
+            });
+            console.log(choosenIds);
+            $.get('@Url.Action("Choose","DerLoadingSchedule", new { date = "_date_" })'.replace("_date_", encodeURI($('#currentDate').val())), function (data) {
+                var $data = $(data);
+                $data.find('.nls-schedules tr:not(:first-child)').each(function (i, val) {
+                    var $row = $(val);
+                    if (choosenIds.indexOf(parseInt($row.find('.id').val())) > -1) {
+                        $row.remove();
+                    }
+                });
+                $modal.find('.modal-body').html($data);
+            })
+        });
+        $(document).on('click', '.add-new-schedule', function (e) {
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Schedule');
+            $('#loadingScheduleModal').modal('show')
+            $.get('@Url.Action("Create","DerLoadingSchedule")', function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        
+        $(document).on('click', '.add-vessel', function (e) {
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Vessel');
+            $('#loadingScheduleModal').modal('show')
+            $.get('@Url.Action("AddVessel","DerLoadingSchedule")', function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.add-buyer', function (e) {
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Buyer');
+            $('#loadingScheduleModal').modal('show')
+            $.get('@Url.Action("AddBuyer","DerLoadingSchedule")', function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.edit-schedule', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass('prevent')) return;
+            window.currentRowInEdit = $this.closest('tr');
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Edit Schedule');
+            $('#loadingScheduleModal').modal('show')
+            var url = $this.attr('href');
+            $.get(url, function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.close-modal', function (e) {
+            $('#loadingScheduleModal').modal('hide');
+        });
+
+        $(document).on('click', '.remove-schedule', function (e) {
+            e.preventDefault();
+            $(this).closest('tr').remove();
+        });
+
+        $(document).on('click', '.check-this', function (e) {
+            var $this = $(this);
+            if ($this.is(':checked')) {
+                $this.closest('tr').addClass('choosen');
+            } else {
+                $this.closest('tr').removeClass('choosen');
+            }
+        });
+        $(document).on('click', '.choose-schedule', function (e) {
+            var choosenRow = $('.nls-schedules').find('tr.choosen').clone(true);
+            choosenRow.addClass('unsaved');
+            choosenRow.each(function (i, val) {
+                var $val = $(val);
+                var id = $val.find('.id').val();
+                $val.find('td:first-child').hide();
+                $val.find('.edit-schedule').removeClass('prevent');
+                $val.find('td:last-child').append(' | <a href="/DerLoadingSchedule/Remarks/'+id+'" class="see-remarks">See All</a>')
+                $val.append('<td><button class="btn btn-default remove-schedule">remove</button></td>');
+            })
+            $('.choosen-schedules').append(choosenRow);
+            $('#loadingScheduleModal').modal('hide')
+        });
+        $(document).on('click', '.see-remarks', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            window.remarkColumn = $this.closest('td');
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Remarks');
+            $('#loadingScheduleModal').modal('show')
+            $.get($this.attr('href'), function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+
+        $(document).on('click', '.manage-remark', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $modal = $('#loadingScheduleModal');
+            $modal.find('.modal-dialog').width(900);
+            $modal.find('.modal-title').html('Add New Remark');
+            $('#loadingScheduleModal').modal('show')
+            $.get($this.attr('href'), function (data) {
+                $modal.find('.modal-body').html(data);
+            })
+        });
+        $(document).on('click', '.delete-remark', function (e) {
+            e.preventDefault();
+            var $this = $(this)
+            $.post($this.attr('href'), {id : $this.attr('data-id')}, function (data) {
+                if (data.IsSuccess) {
+                    $('.remarks-list .success-message').html(data.Message);
+                    $this.closest('tr').remove();
+                    setTimeout(function () { $('.remarks-list .success-message').html('') }, 1000)
+                } else {
+                    $('.remarks-list .validation-summary').html(data.Message);
+                    setTimeout(function () { $('.remarks-list .validation-summary').html('') }, 1000)
+                }
+            })
+        });
+        $(document).on('click', '.save-schedules', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var ids = [];
+           $('.choosen-schedules tr:not(:first-child)').each(function (i, val) {
+                var id = parseInt($(val).find('.id').val());
+                ids.push(id);
+            });
+           var currentDate = $('#currentDate').val();
+           console.log(ids);
+            $.post('@Url.Action("SaveSchedules", "DerLoadingSchedule")', { ids: ids, date: currentDate }, function (data) {
+                if (data.IsSuccess) {
+                    $('.marine-shipping-message .success-message').html('<p>' + data.Message + '</p>');
+                    if ($('.choosen-schedules').hasClass('prev')) {
+                        $('.choosen-schedules').removeClass('prev');
+                    }
+                    setTimeout(function () {
+                        $('.marine-shipping-message .success-message').html('');
+                    }, 1000)
+                    $('.choosen-schedules tr.unsaved').each(function (i, val) {
+                        $(val).removeClass('unsaved');
+                    })
+                    $('.choosen-schedules').addClass('now');
+                    $('input[tabindex=171]').focus();
+                } else {
+                    $('.marine-shipping-message .validation-summary').html('<p>' + data.Message + '</p>');
+                    setTimeout(function () {
+                        $('.marine-shipping-message .validation-summary').html('');
+                    }, 1000)
+                }
+            });
+        })
+    })
+</script>

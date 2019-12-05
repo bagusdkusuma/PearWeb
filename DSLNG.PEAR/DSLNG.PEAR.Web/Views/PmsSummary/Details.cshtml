@@ -1,0 +1,128 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PmsSummary.PmsSummaryDetailsViewModel
+@{
+    ViewBag.Title = "Pms Summary Configuration";
+}
+@Html.Partial("_MessageResponse")
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="pull-left">@ViewBag.Title @Model.Year</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="display: inline">Pillar & Key Performance Indicator</h4>
+        @Html.ActionLink("Add Pillar", "Create", "PmsConfig", new { id = Model.PmsSummaryId }, new { @class = "btn-lightblue", data_toggle = "modal", data_target = "#modalDialog" })
+        <a href="@Url.Action("Configuration", "PmsSummary")" class="btn-lightblue">Back</a>
+    </div>
+    <div class="col-md-12">
+        <h6>Total Score For All Pillar : <span id="totalScoreAllPillar">@TotalScoreForPillar(Model.TotalScoreAllPillar) </span></h6>
+    </div>
+    <div class="col-md-12" style="margin-bottom: 10px;">
+        
+    </div>
+</div>
+<div class="row pms-summary-detail-config">
+    <div class="col-md-12">
+        @{
+            for (int i = 0; i < Model.PmsConfigs.Count; i++)
+            {
+                int i1 = i;
+            
+            
+                <div style="padding-bottom: 28px; margin-top: 40px;">
+                    <h4 class="pull-left" style="text-transform: capitalize">@Model.PmsConfigs[i1].PillarName (@Model.PmsConfigs[i1].Weight)</h4>
+                    <a href="@Url.Action("Create", "PmsConfigDetails", new { id = Model.PmsConfigs[i1].Id })" class="text-button pull-right" data-toggle="modal" data-target="#modalDialog">
+                        <span class="fa fa-plus-circle"></span>Add Kpi
+                    </a>
+                    <a href="@Url.Action("Update", "PmsConfig", new { id = Model.PmsConfigs[i].Id })" data-toggle="modal" data-target="#modalDialog" class="text-button pull-right">
+                        <span class="fa fa-pencil-square-o"></span>Edit Pilar
+                    </a>
+                    <a href='javascript:;' onclick='confirmDelete(@Model.PmsConfigs[i1].Id, @Model.PmsSummaryId, "PmsConfig")' class="text-button pull-right"><span class="fa fa-trash-o"></span>Delete</a>
+                </div>
+            
+            <table class="table table-transparent table-responsive table-hover" border="1">
+                <tbody>
+                    <tr>
+                        <th>KPI Name</th>
+                        <th>Measurement</th>
+                        <th>Weight</th>
+                        <th>Scoring Type</th>
+                        <th>Scoring Indicator</th>
+                        <th>Action</th>
+                    </tr>
+
+                    @foreach (var pmsConfigDetails in Model.PmsConfigs[i1].PmsConfigDetailsList)
+                    {
+                        <tr>
+                            <td>@pmsConfigDetails.KpiName</td>
+                            <td>@pmsConfigDetails.KpiMeasurement</td>
+                            <td>@pmsConfigDetails.Weight</td>
+                            <td>@pmsConfigDetails.ScoringType</td>
+                            <td class="text-button"><a data-target="#modalDialogScoreIndicator" data-toggle="modal" href="@Url.Action("ScoreIndicatorDetails", "PmsConfigDetails", new { id = pmsConfigDetails.Id })"><span class="fa fa-table"></span>View Scoring Indicator</a></td>
+                            <td class="text-button">
+                                <a data-target="#modalDialog" data-toggle="modal" href="@Url.Action("Update", "PmsConfigDetails", new { id = pmsConfigDetails.Id })"><span class="fa fa-pencil-square-o"></span>Edit</a>
+                                <a href='javascript:;' onclick='confirmDelete(@pmsConfigDetails.Id, @Model.PmsSummaryId, "PmsConfigDetails")'><span class="fa fa-trash-o"></span>Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+            }
+        }
+    </div>
+</div>
+
+@Html.Partial("_Modal")
+@Html.Partial("_ModalScoreIndicator")
+
+@section Scripts{
+    <script type="text/javascript">
+        var confirmDelete = function (id, pmsSummaryId, controller) {
+            if (confirm('Are you sure want to delete this item?')) {
+                var url = '@Url.Action("Delete", "PmsConfigDetails")';
+                if (controller == 'PmsConfig') {
+                    url = '@Url.Action("Delete", "PmsConfig")';
+                }
+
+
+                var form = document.createElement("form");
+                form.setAttribute("method", 'POST');
+                form.setAttribute("action", url);
+
+                var fId = document.createElement("input");
+                fId.setAttribute('type', 'hidden');
+                fId.setAttribute('name', 'id');
+                fId.setAttribute('value', id);
+                form.appendChild(fId);
+
+                var fPmsSummaryId = document.createElement("input");
+                fPmsSummaryId.setAttribute('type', 'hidden');
+                fPmsSummaryId.setAttribute('name', 'pmsSummaryId');
+                fPmsSummaryId.setAttribute('value', pmsSummaryId);
+                form.appendChild(fPmsSummaryId);
+
+                document.body.appendChild(form);
+                form.submit();
+
+                //$('<form action="' + url + '" method="POST">' +
+                //    '<input type="hidden" name="id" value="' + id + '">' +
+                //    '<input type="hidden" name="pmsSummaryId" value="' + pmsSummaryId + '">' +
+                //    '</form>').submit();
+            }
+        };
+
+    </script>
+}
+
+@helper TotalScoreForPillar(double score) {
+    if (score > 100)
+    {
+        <span style='color: red'>@score</span>
+    }
+    else
+    {
+        @score
+    }
+}

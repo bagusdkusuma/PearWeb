@@ -1,0 +1,31 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
+
+@{
+    var labels = new List<string>
+    {
+        "Plant Availability(hour daily)", "Plant Thermal Efeciency", "Material Balance(Flare Loss-%)", "Plant Intake Utilization(Feed/ Max.Cap)", "Total Fuel Gas (GTG)", "Total Fuel Gas (GTC)", "Total Fuel Gas (LP Fuel)", "Target Total Fuel Gas (GTG)"
+    , "Target Total Fuel Gas(GTC)", "Target Total Fuel Gas(LP Fuel)"
+    };
+    for (int i = 0; i < Model.KpiInformations.Count; i++)
+    {
+        var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
+        if (posIndex != null)
+        {
+            <div class="form-group row">
+
+                <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem>(), new { @class = "kpi-list form-control", style = "width:180px" })
+                    @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes)
+
+                    <input type="hidden" name="KpiInformations.Index" value="@i" />
+                </div>
+            </div>
+        }
+    }
+}
+
+
+

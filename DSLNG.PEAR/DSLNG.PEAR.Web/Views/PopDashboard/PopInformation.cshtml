@@ -1,0 +1,775 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.PopDashboard.GetPopDashboardViewModel
+
+@{
+    ViewBag.Title = "PopInformation";
+}
+<div class="pop-information">
+    <div class="pop-title">
+        <h4>@Model.Title</h4>
+        <h4>@Model.Number</h4>
+        <h4>@Model.Subtitle</h4>
+    </div>
+    <div class="row pop-body">
+        <div class="col-md-4">
+            <div class="info">
+                <table class="table table-info">
+                    @* BACKGROUND/OBJECTIVE *@
+                    <tr class="DashboardObjective">
+                        <td colspan="2">
+                            <h4>BACKGROUND/OBJECTIVE </h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.DashboardObjective) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="0" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="DashboardObjective" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="DashboardObjective-info">
+                        @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.DashboardObjective))
+                        {
+                            <td data-id="@item.Id" data-type="0" data-value="@item.Value">@item.Value</td>
+                        }
+                    </tr>
+
+                    @* KEY PERFORMANCE MEASURE *@
+                    <tr class="KeyPerformanceMeasure">
+                        <td colspan="2">
+                            <h4>KEY PERFORMANCE MEASURE: RESULT (optional)</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.KeyPerformanceMeasure) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="1" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="KeyPerformanceMeasure" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="KeyPerformanceMeasure-info">
+                        @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.KeyPerformanceMeasure))
+                        {
+                            <td data-id="@item.Id" data-type="1" data-value="@item.Value">@item.Value</td>
+                        }
+                    </tr>
+
+                    @* BENEFITS *@
+                    <tr class="Benefits">
+                        <td colspan="2">
+                            <h4>BENEFITS</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.Benefits) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="2" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="Benefits" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="Benefits-info">
+                        @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.Benefits))
+                        {
+                            <td data-id="@item.Id" data-type="2" data-value="@item.Value">@item.Value</td>
+                        }
+                    </tr>
+
+                    @* POTENTIAL PROBLEM & RISK *@
+                    <tr class="PotentialProblemRisk">
+                        <td colspan="2">
+                            <h4>POTENTIAL PROBLEM & RISK</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.PotentialProblemRisk) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="3" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="PotentialProblemRisk" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="PotentialProblemRisk-info">
+                        @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.PotentialProblemRisk))
+                        {
+                            <td data-id="@item.Id" data-type="3" data-value="@item.Value">@item.Value</td>
+                        }
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="info">
+                <table class="table table-info-2" border="1">
+                    <tr>
+                        <th rowspan="2" colspan="3" class="SupporttingDataNeeded">
+                            <h4>SUPPORTING DATA NEEDED</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.SupporttingDataNeeded) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="4" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="SupporttingDataNeeded" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </th>
+                        <th colspan="4"><h4>STRUCTURE</h4> </th>
+                    </tr>
+                    <tr>
+                        <th class="StructureMember">
+                            <h4>MEMBER</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureMember) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="5" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="StructureMember" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </th>
+                        <th class="StructureLeader">
+                            <h4>LEADER</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureLeader) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="6" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="StructureLeader" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </th>
+                        <th class="StructureOwner">
+                            <h4>OWNER</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureOwner) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="7" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="StructureOwner" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </th>
+                        <th class="StructureAdvisor">
+                            <h4>ADVISOR/STEERING COMMITTEE (if any)</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureAdvisor) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="8" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="StructureAdvisor" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="SupporttingDataNeeded-info" colspan="3">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.SupporttingDataNeeded))
+                            {
+                                <span data-id="@item.Id" data-type="4" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                        <td class="StructureMember-info">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureMember))
+                            {
+                                <span data-id="@item.Id" data-type="5" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                        <td class="StructureLeader-info">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureLeader))
+                            {
+                                <span data-id="@item.Id" data-type="6" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                        <td class="StructureOwner-info">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureOwner))
+                            {
+                                <span data-id="@item.Id" data-type="7" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                        <td class="StructureAdvisor-info">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.StructureAdvisor))
+                            {
+                                <span data-id="@item.Id" data-type="8" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="Scope">
+                        <td colspan="7" style="text-align: center">
+                            <h4>Scope</h4>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.Scope) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="9" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="Scope" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="Scope-info">
+                        @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.Scope))
+                        {
+                            <td data-id="@item.Id" data-type="9" data-value="@item.Value" colspan="7">@item.Value</td>
+                        }
+                    </tr>
+                    <tr>
+                        <th colspan="7"><h4>Resources</h4></th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"><h6>Financial</h6></td>
+                        <td class="ResourcesNonFinancial" colspan="3">
+                            <h6>Non Financial</h6>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesNonFinancial) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="right" data-type="10" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="ResourcesNonFinancial" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                        <td class="ResourcesRemark" colspan="2">
+                            <h6>Remark</h6>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="left" data-type="11" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="ResourcesRemark" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ResourcesFinancial-info" colspan="3">
+                            Financial di skip dulu
+                        </td>
+                        <td class="ResourcesNonFinancial-info" colspan="3">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesNonFinancial))
+                            {
+                                <span data-id="@item.Id" data-type="10" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                        <td class="ResourcesRemark-info">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark))
+                            {
+                                <span data-id="@item.Id" data-type="11" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="requestby" colspan="3"><h6>Request by</h6></td>
+                        <td class="checkedby" colspan="3"><h6>Checked by</h6></td>
+                        <td class="ResourcesRemark2">
+                            <h6>Remark</h6>
+                            @if (Model.PopInformations.FirstOrDefault(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark2) == null)
+                            {
+                                <a href="#" data-toggle="popover" data-placement="left" data-type="12" data-dashboard-id="@Model.Id" data-id="0" class="add-item"><i class="fa fa-plus"></i></a>
+                            }
+                            else
+                            {
+                                <a href="#" data-dashboard-id="@Model.Id" data-type="ResourcesRemark2" class="edit-link"><i class="fa fa-edit"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="requestby-info" colspan="3">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.requestby).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="checkedby-info" colspan="3">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.checkedby).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td rowspan="2" class="ResourcesRemark2-info">
+                            @foreach (var item in Model.PopInformations.Where(x => x.Type == DSLNG.PEAR.Data.Enums.PopInformationType.ResourcesRemark2))
+                            {
+                                <span data-id="@item.Id" data-type="12" data-value="@item.Value">@item.Value</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Performance Monitoring Analyst</td>
+                        <td colspan="3">Economic and Planning  Specialist</td>
+                    </tr>
+                    <tr>
+                        <th colspan="7"><h6>APPROVAL</h6></th>
+                    </tr>
+                    <tr>
+                        <td class="cpd"><h6>CPD</h6></td>
+                        <td class="fd"><h6>FD</h6></td>
+                        <td class="pd"><h6>PD</h6></td>
+                        <td class="od"><h6>OD</h6></td>
+                        <td class="td"><h6>TD</h6></td>
+                        <td class="cad"><h6>CAD</h6></td>
+                        <td class="cd"><h6>CD</h6></td>
+                    </tr>
+                    <tr>
+                        <td class="cpd-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cpd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="fd-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.fd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="pd-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.pd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="od-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.od).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="td-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.td).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="cad-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cad).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td class="cd-info">
+                            @{
+                                foreach (var item in Model.Signatures.Where(x => x.Type == DSLNG.PEAR.Data.Enums.SignatureType.cd).ToList())
+                                {
+                                    if (item.Id != null && item.IsApprove == false && item.IsReject == false)
+                                    {
+                                        <span>Being Reviewed</span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == true && item.IsReject == false)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId"><img src="@item.SignatureImage" /></span>
+                                    }
+                                    else if (item.Id != null && item.IsApprove == false && item.IsReject == true)
+                                    {
+                                        <span data-id="@item.Id" data-type="0" data-userid="@item.UserId">Rejected</span><a href="#" data-toggle="modal" data-target="#nodeReject" data-note="@item.Note" class="note-reject"><i class="fa fa-comment"></i></a>
+                                    }
+                                }
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@* Modal create *@
+<div class="form-information" style="display: none;">
+    <form>
+        <div>
+            <input type="hidden" name="id" />
+            <input type="hidden" name="dashboardId" />
+            <input type="hidden" name="type" />
+            <input type="text" name="title" hidden="hidden" />
+            <label>Desc</label>
+            <textarea name="value" cols="25" rows="5" required="required"></textarea>
+
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary input-information">Add</button>
+            <button class="btn btn-primary cancel-popover">Cancel</button>
+        </div>
+
+    </form>
+</div>
+
+@*Modal Edit  *@
+<div class="form-edit-information" style="display: none;">
+    <form>
+        <div>
+            <input type="hidden" name="id" />
+            <input type="hidden" name="dashboardId" />
+            <input type="hidden" name="type" />
+            <input type="text" name="title" hidden="hidden" />
+            <label>Desc</label>
+            <textarea name="value" cols="25" rows="5" required="required"></textarea>
+
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary edit-information">Edit</button>
+            <button class="btn btn-primary cancel-popover">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="nodeReject">
+    <div class="modal-dialog">
+        <div class="modal-content modal-node" style="color:white">
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(document).on('click', '.add-item', function () {
+                var id = $(this).data('id');
+                var dashboardId = $(this).data('dashboard-id');
+                var type = $(this).data('type');
+                $('.popover').find('input[name="id"]').attr('value', id);
+                $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
+                $('.popover').find('input[name="type"]').attr('value', type);
+                popOverElem = $(this);
+
+            });
+
+
+            $('body').popover({
+                selector: '.add-item',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.form-information').html();
+                }
+            });
+            $('tr').popover({
+                selector: '.edit-link',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.form-edit-information').html();
+                }
+            });
+
+            $('td').popover({
+                selector: '.add-signature',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.form-add-signature').html();
+                }
+            });
+
+            $(document).on('click', '.add-signature', function () {
+                var $that = $(this);
+                var $dashboardId = $that.data('dashboard-id');
+                var $type = $that.data('type-signature');
+                $('.popover').find('input[name="dashboardId"]').attr('value', $dashboardId);
+                $('.popover').find('input[name="typeSignature"]').attr('value', $type);
+                popOverElem = $(this);
+            });
+
+
+            $(document).on('click', '.input-signature', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Create", "Signature")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + '<img src="' + data.signatureImage + '">' + '</span>');
+                        popOverElem.popover('hide');
+                        $('.' + data.type).find('a').remove();
+                        $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-signature"><i class="fa fa-edit"></i></a>')
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.input-information', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Create", "PopInformation")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.typeInt == 0 || data.typeInt == 1 || data.typeInt == 2 || data.typeInt == 3) {
+                            $('.' + data.type + '-info').append('<td data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</td>');
+                            popOverElem.popover('hide');
+                            $('.' + data.type).find('td').find('a').remove();
+                            $('.' + data.type).find('td').append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
+                        }
+                        else if (data.typeInt == 4 || data.typeInt == 5 || data.typeInt == 6 || data.typeInt == 7 || data.typeInt == 8 || data.typeInt == 12) {
+                            $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</span>');
+                            popOverElem.popover('hide');
+                            $('.' + data.type).find('a').remove();
+                            $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
+                        }
+                        else if (data.typeInt == 9) {
+                            $('.' + data.type + '-info').append('<td data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '" colspan="7">' + data.value + '</td>');
+                            popOverElem.popover('hide');
+                            $('.' + data.type).find('td').find('a').remove();
+                            $('.' + data.type).find('td').append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
+                        }
+                        else {
+
+                            $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</span>');
+                            popOverElem.popover('hide');
+
+                            $('.' + data.type).find('a').remove();
+                            $('.' + data.type).append('<a href="#" data-dashboard-id="@Model.Id" data-type="' + data.type + '" class="edit-link"><i class="fa fa-edit"></i></a>');
+
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.edit-information', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Edit", "PopInformation")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.typeInt == 0 || data.typeInt == 1 || data.typeInt == 2 || data.typeInt == 3) {
+                            $('.' + data.type + '-info').find('td').remove();
+                            $('.' + data.type + '-info').append('<td data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</td>');
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.typeInt == 4 || data.typeInt == 5 || data.typeInt == 6 || data.typeInt == 7 || data.typeInt == 8 || data.typeInt == 12) {
+                            $('.' + data.type + '-info').find('span').remove();
+                            $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '">' + data.value + '</span>');
+                            popOverElem.popover('hide');
+                        }
+                        else if (data.typeInt == 9) {
+                            $('.' + data.type + '-info').find('td').remove();
+                            $('.' + data.type + '-info').append('<td data-id="' + data.id + '" data-type="' + data.typeInt + '" data-value="' + data.value + '" colspan="7">' + data.value + '</td>');
+                            popOverElem.popover('hide');
+                        }
+                        else {
+                            $('.' + data.type + '-info').find('span').remove();
+                            $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="10" data-value="' + data.value + '">' + data.value + '</span>')
+                            popOverElem.popover('hide');
+                        }
+
+
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.edit-link', function () {
+                var $that = $(this);
+                var typeSignature = $that.data('type');
+                $table = $that.closest('table');
+                $td = $table.find('.' + typeSignature + '-info').find('td');
+                $span = $table.find('.' + typeSignature + '-info').find('span');
+
+                var id = $td.data('id');
+                var type = $td.data('type');
+                var value = $td.data('value');
+                var dashboardId = $that.data('dashboard-id');
+
+                var id2 = $span.data('id')
+                var type2 = $span.data('type');
+                var value2 = $span.data('value');
+
+
+                if (id != null && type != null && value != null) {
+                    $('.popover').find('input[name="id"]').attr('value', id);
+                    $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
+                    $('.popover').find('input[name="type"]').attr('value', type);
+                    $('.popover').find('textarea[name="value"]').val(value);
+                }
+                else {
+                    $('.popover').find('input[name="id"]').attr('value', id2);
+                    $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
+                    $('.popover').find('input[name="type"]').attr('value', type2);
+                    $('.popover').find('textarea[name="value"]').val(value2);
+                }
+
+                popOverElem = $(this);
+            });
+
+            $('table').popover({
+                selector: '.edit-signature',
+                html: true,
+                title: function () {
+                    return 'Test';
+                },
+                content: function () {
+                    return $('.form-edit-signature').html();
+                }
+            });
+
+            $(document).on('click', '.edit-signature', function () {
+                var $that = $(this);
+                var type = $that.data('type');
+                $table = $that.closest('table');
+                $td = $table.find('.' + type + '-info').find('span');
+
+                var id = $td.data('id')
+                var type = $td.data('type');
+                var userid = $td.data('userid');
+                var dashboardId = $that.data('dashboard-id');
+
+                $('.popover').find('input[name="id"]').attr('value', id);
+                $('.popover').find('input[name="dashboardId"]').attr('value', dashboardId);
+                $('.popover').find('select[name="UserId"]').find('option[value="' + userid + '"]').attr('selected', 'selected');
+                $('.popover').find('input[name="typeSignature"]').attr('value', type);
+                popOverElem = $(this);
+            });
+
+
+
+            $(document).on('click', '.btn-edit-signature', function (e) {
+                e.preventDefault();
+                var $that = $(this);
+                $.ajax({
+                    url: '@Url.Action("Edit", "Signature")',
+                    data: $that.closest('form').serialize(),
+                    type: 'POST',
+                    success: function (data) {
+                        $('.' + data.type + '-info').find('span').remove();
+                        $('.' + data.type + '-info').append('<span data-id="' + data.id + '" data-type="' + data.typeInt + '" data-userid="' + data.userId + '">' + '<img src="' + data.signatureImage + '">' + '</span>');
+                        popOverElem.popover('hide');
+
+                    }
+                });
+            });
+
+            $(document).on('click', '.cancel-popover', function (e) {
+                e.preventDefault();
+                $('.popover').popover('hide');
+            });
+
+            $(document).on('click', '.note-reject', function () {
+                $that = $(this);
+                $('.modal-node').html('');
+                $('.modal-node').append('<span>' + $that.data('note') + '</span>')
+            });
+
+
+
+        });
+    </script>
+}
